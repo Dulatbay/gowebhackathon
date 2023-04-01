@@ -8,7 +8,7 @@ class RecipeController {
             if (!req.headers['content-type'].startsWith('multipart/form-data')) next(ApiError.BadRequest('Its not form-data'))
             const images = req.files?.images;
 
-            const arrPathImages = fileService.getImages(images);
+            const arrPathImages = await fileService.getImages(images);
 
             const recipeData = {...req.body, images: arrPathImages};
             const recipe = await recipeService.createRecipe(recipeData);

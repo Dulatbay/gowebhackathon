@@ -7,24 +7,13 @@ class HistoryService {
 
     async getHistoryById(id) {
         const history = await HistoryModel.findById(id)
-            .populate('author', '-password')
-            .populate({
-                path: 'comments',
-                populate: {path: 'author', select: '-password'},
-            })
-            .populate('likes', '-password')
-            .populate('brandLikes', '-password')
-            .populate('saves', '-password')
-            .populate('shares', '-password')
-            .populate('views', '-password');
+
         return history;
     }
 
     async getPopularHistories() {
         const histories = await HistoryModel.find()
             .sort({likes: -1})
-            .populate('author', '-password')
-            .limit(10);
         return histories;
     }
 
@@ -36,31 +25,17 @@ class HistoryService {
     async getMostViewedHistories() {
         const histories = await HistoryModel.find()
             .sort({views: -1})
-            .populate('author', '-password')
-            .limit(10);
         return histories;
     }
 
     async getNewestHistories() {
         const histories = await HistoryModel.find()
             .sort({createdAt: -1})
-            .populate('author', '-password')
-            .limit(10);
         return histories;
     }
 
     async getUserHistories(userId) {
         const histories = await HistoryModel.find({author: userId})
-            .populate('author', '-password')
-            .populate({
-                path: 'comments',
-                populate: {path: 'author', select: '-password'},
-            })
-            .populate('likes', '-password')
-            .populate('brandLikes', '-password')
-            .populate('saves', '-password')
-            .populate('shares', '-password')
-            .populate('views', '-password');
         return histories;
     }
 

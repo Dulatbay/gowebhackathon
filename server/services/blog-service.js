@@ -32,13 +32,7 @@ class BlogService {
 
     async getBlogById(id) {
         const blog = await BlogModel.findById(id)
-            .populate('authors', 'username')
-            .populate('likes', 'username')
-            .populate('brandLikes', 'name')
-            .populate('comments.author', 'username')
-            .populate('saves', 'username')
-            .populate('shares', 'username')
-            .populate('supportBrands', 'name');
+
         return blog;
     }
 

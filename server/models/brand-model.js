@@ -5,7 +5,10 @@ const BrandSchema = new mongoose.Schema({
     name: {type: String, require: true},
     createdAt: {type: Date, default: Date.now},
     description: {type: String, require: true},
-    followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    usersFollowers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    userSubscriptions: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    brandsSubscriptions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Brand'}],
+    brandsFollowers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Brand'}],
     isActivated: {type: Boolean, default: false},
     addresses: [{type: String}],
 });

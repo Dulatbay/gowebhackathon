@@ -8,15 +8,15 @@ class BlogController {
         try {
             if (!req.headers['content-type'].startsWith('multipart/form-data')) next(ApiError.BadRequest('Its not form-data'))
             const images = req.files?.images;
-
-            const arrPathImages = fileService.getImages(images);
+            const arrPathImages = await fileService.getImages(images);
 
             const blogData = {...req.body, images: arrPathImages};
+
             const blog = await blogService.createBlog(blogData);
 
             return res.json(blog);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
         }
     }
 
@@ -26,40 +26,47 @@ class BlogController {
             const blog = await blogService.getBlogById(id);
             return res.json(blog);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
         }
     }
+
     async getAllBlogs(req, res, next) {
         try {
             const blogs = await blogService.getAllBlogs();
             return res.json(blogs);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
 
     async getPopularBlogs(req, res, next) {
         try {
-            const blogs = await blogService.getPupularBlogs()();
+            const blogs = await blogService.getPopularBlogs();
             return res.json(blogs);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
+
     async getNewestBlog(req, res, next) {
         try {
             const blogs = await blogService.getNewestBlogs();
             return res.json(blogs);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
+
     async getMostViewedBlogs(req, res, next) {
         try {
             const blogs = await blogService.getMostViewedBlogs();
             return res.json(blogs);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
 
@@ -69,7 +76,8 @@ class BlogController {
             const blogs = await blogService.getBlogsByUser({userId});
             return res.json(blogs);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
 
@@ -81,7 +89,8 @@ class BlogController {
             const blogs = await blogService.updateBlog({blogId}, {blogData});
             return res.json(blogs);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
 
@@ -91,23 +100,27 @@ class BlogController {
             const result = await blogService.deleteBlog({blogId});
             return res.json(result);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
+
     async confirmBlog(req, res, next) {
-        try{
+        try {
             const id = req.params.id;
             return res.json(await blogService.confirmBlog(id))
-        }catch (error){
-            next(error)
+        } catch (error) {
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
+
     async banBlog(req, res, next) {
-        try{
+        try {
             const id = req.params.id;
             return res.json(await blogService.banBlog(id))
-        }catch (error){
-            next(error)
+        } catch (error) {
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
         }
     }
 
