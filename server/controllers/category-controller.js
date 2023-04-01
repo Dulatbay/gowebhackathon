@@ -1,4 +1,5 @@
 const categoryService = require('../services/category-service');
+const fileService = require("../services/file-service");
 class CategoryController {
     async getAllCategories(req, res) {
         const categories = await categoryService.getAllCategories();
@@ -12,7 +13,10 @@ class CategoryController {
     };
 
     async createCategory(req, res) {
-        const categoryData = req.body;
+        const image = req.files?.image;
+        const pathImage = await fileService.saveFile(image)
+
+        const categoryData = {...req.body, image: pathImage};
         const category = await categoryService.createCategory(categoryData);
         res.json(category);
     };

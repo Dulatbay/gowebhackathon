@@ -11,8 +11,6 @@ class HistoryController {
 
             const historyData = {...req.body, author: req.user.id, images: arrPathImages};
             const history = await historyService.createHistory(historyData);
-
-
             return res.json(history);
         } catch (error) {
             next(ApiError.BadRequest(`ValidatorError - ${error.message}`))

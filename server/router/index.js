@@ -5,6 +5,7 @@ const historyRouter = require('./history-router')
 const blogRouter = require('./blog-router')
 const recipeRouter = require('./recipe-router')
 const brandRouter = require('./brand-router')
+const categoriesRouter = require('./category-router')
 
 
 const router = new Router();
@@ -20,6 +21,8 @@ router.use('/blogs', blogRouter)
 router.use('/recipes', recipeRouter)
 
 router.use('/brands', brandRouter)
+
+router.use('/categories', categoriesRouter)
 
 
 

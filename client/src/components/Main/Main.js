@@ -7,6 +7,10 @@ import {SquareCard} from "../SquareCard/SqueareCard";
 import {CardSwiper} from "../../Swiper/CardSwiper";
 
 const Main = () => {
+    const getCardsByCategories = () => {
+
+    }
+
     return (
         <div className={styles.main}>
             <div className={styles.bg}>
@@ -18,11 +22,10 @@ const Main = () => {
                 <p></p>
             </div>
             <main>
-                <CardSwiper items={[]}/>
-
                 <div className={styles.wrapper}>
-                    {/*<ItemsCarousel items={[]} title={""}/>*/}
-                    {/*<HomeCategories/>*/}
+                    <HomeCategories>
+                        <CardSwiper cards={[]}/>
+                    </HomeCategories>
                     {/*<HomeBrands />*/}
                 </div>
             </main>

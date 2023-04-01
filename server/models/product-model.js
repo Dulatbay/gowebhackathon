@@ -7,6 +7,7 @@ const ProductSchema = new Schema({
     price: {type: Decimal128, require: true},
     title: {type: String, require: true},
     content: {type: String, require: true},
+    images: [{type: String}],
     reviews: [{
         user: {type: Schema.Types.ObjectId, ref: 'User'},
         rating: {type: Schema.Types.Number, require: true},

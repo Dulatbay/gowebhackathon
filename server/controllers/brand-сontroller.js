@@ -1,6 +1,8 @@
 const brandService = require('../services/brand-service');
 const blogService = require("../services/blog-service");
 const ApiError = require("../exceptions/api-error");
+const fileService = require("../services/file-service");
+const recipeService = require("../services/recipe-service");
 
 class BrandController {
     async getAllBrands(req, res, next) {
@@ -15,7 +17,11 @@ class BrandController {
     }
 
     async createBrand(req, res, next) {
-        const brandData = req.body;
+        const images = req.files?.images;
+
+        const arrPathImages = await fileService.getImages(images);
+
+        const brandData = {...req.body, images: arrPathImages};
         const brand = await brandService.createBrand(brandData);
         res.json(brand);
     }

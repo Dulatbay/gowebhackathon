@@ -16,7 +16,7 @@ blogRouter.get("/most-viewed", blogController.getMostViewedBlogs)
 
 blogRouter.get("/newest", blogController.getNewestBlog)
 
-blogRouter.get("/user/:userId", blogController.getBlogById)
+blogRouter.get("/user/:userId", blogController.getUserBlogs)
 
 blogRouter.put("/:id", authMiddleware, multipartMiddleware, blogController.updateBlog)
 

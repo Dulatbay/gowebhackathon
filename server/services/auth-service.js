@@ -16,7 +16,8 @@ class AuthService {
 
         const activationLink = uuid.v4();
 
-        const user = await UserModel.create({email, password: hashPassword})
+        const user = await UserModel.create({email, password: hashPassword, roles: ["USER"]})
+
         const userDto =  new UserDto(user)
 
         await  ActivationLinkModel.create({user: userDto.id, activationLink})
@@ -32,13 +33,13 @@ class AuthService {
     }
 
     async activate(activationLink){
-        const user = await UserModel.findOne({activationLink})
-        if(!user) throw  ApiError.BadRequest("Activation link is incorrect")
+        const link = await ActivationLinkModel.findOne({activationLink})
+        if(!link) throw  ApiError.BadRequest("Activation link is incorrect")
+        const user = await UserModel.findById(link.user);
         user.isActivated = true;
         await user.save();
 
         await ActivationLinkModel.deleteOne({activationLink})
-
     }
 
     async login(email, password) {

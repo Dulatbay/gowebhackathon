@@ -15,4 +15,7 @@ module.exports = class ApiError extends Error{
     static BadRequest(message, errors=[]){
         return new ApiError(400, message, errors)
     }
+    static MethodNotAllowed(message){
+        return new ApiError(405, 'Method is not allowed')
+    }
 }
