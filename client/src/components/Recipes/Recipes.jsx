@@ -1,0 +1,5 @@
+export const Recipes = () => {
+    return (
+        <></>
+    )
+}

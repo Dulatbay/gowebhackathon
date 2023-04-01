@@ -1,0 +1,19 @@
+.bg{
+    min-height: 100vh;
+    width: 100vw;
+    background-image: url('../../images/home-bg.jpg');
+    background-position: center;
+    background-size: cover;
+    z-index: -5000;
+}
+
+.main{
+    overflow-x: hidden;
+}
+
+
+.wrapper{
+    background: aqua;
+    margin: 50px auto auto;
+    max-width: 1400px;
+}

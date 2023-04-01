@@ -1,0 +1,5 @@
+export const Store = () => {
+    return (
+        <></>
+    )
+}
