@@ -1,7 +1,7 @@
 /* Reset and base styles  */
 * {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     border: none;
 }
 
@@ -34,11 +34,7 @@ a:hover  {
     text-decoration: none;
 }
 
-/* Common */
 
-aside, nav, footer, header, section, main {
-    display: block;
-}
 
 h1, h2, h3, h4, h5, h6, p {
     font-size: inherit;
@@ -92,10 +88,36 @@ button::-moz-focus-inner {
     border: 0;
 }
 
-label {
-    cursor: pointer;
+
+
+.circle {
+    z-index: -1;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    opacity: 0.3;
+    background: #28a92b;
+    border-radius: 50%;
 }
 
-legend {
-    display: block;
+.circle.dote {
+    width: 3px;
+    height: 3px;
 }
+
+.circle.sm {
+    width: 30px;
+    height: 30px;
+}
+
+.circle.md {
+    width: 60px;
+    height: 60px;
+}
+
+.circle.lg {
+    width: 90px;
+    height: 90px;
+}
+
