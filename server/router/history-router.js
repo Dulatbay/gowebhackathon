@@ -1,9 +1,10 @@
 const Router = require('express')
 const historyController = require('../controllers/history-controller')
 const authMiddleware = require('../middlewares/auth-middlware')
+const multipartMiddleware = require('../middlewares/multipart-middleware')
 const historyRouter = new Router();
 
-historyRouter.post('/', authMiddleware, historyController.createHistory)
+historyRouter.post('/', authMiddleware, multipartMiddleware , historyController.createHistory)
 
 historyRouter.get("/", historyController.getAllHistories)
 
@@ -17,7 +18,7 @@ historyRouter.get("/newest", historyController.getNewestHistories)
 
 historyRouter.get("/user/:userId", historyController.getUserHistories)
 
-historyRouter.put("/:id", authMiddleware, historyController.updateHistory)
+historyRouter.put("/:id", authMiddleware,  multipartMiddleware ,historyController.updateHistory)
 
 historyRouter.delete("/:id", authMiddleware, historyController.deleteHistory)
 

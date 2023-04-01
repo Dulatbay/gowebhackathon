@@ -1,9 +1,10 @@
 const Router = require('express')
 const blogController = require('../controllers/blog-controller')
+const multipartMiddleware = require('../middlewares/multipart-middleware')
 const authMiddleware = require('../middlewares/auth-middlware')
 const blogRouter = new Router();
 
-blogRouter.post('/', authMiddleware, blogController.createBlog)
+blogRouter.post('/', authMiddleware, multipartMiddleware, blogController.createBlog)
 
 blogRouter.get("/", blogController.getAllBlogs)
 
@@ -17,7 +18,7 @@ blogRouter.get("/newest", blogController.getNewestBlog)
 
 blogRouter.get("/user/:userId", blogController.getBlogById)
 
-blogRouter.put("/:id", authMiddleware, blogController.updateBlog)
+blogRouter.put("/:id", authMiddleware, multipartMiddleware, blogController.updateBlog)
 
 blogRouter.delete("/:id", authMiddleware, blogController.deleteBlog)
 

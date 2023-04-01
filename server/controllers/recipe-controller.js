@@ -5,7 +5,6 @@ const ApiError = require("../exceptions/api-error");
 class RecipeController {
     async createRecipe(req, res, next) {
         try {
-            if (!req.headers['content-type'].startsWith('multipart/form-data')) next(ApiError.BadRequest('Its not form-data'))
             const images = req.files?.images;
 
             const arrPathImages = await fileService.getImages(images);
@@ -74,7 +73,6 @@ class RecipeController {
 
     async updateRecipe(req, res, next) {
         try {
-            if (!req.headers['content-type'].startsWith('multipart/form-data')) next(ApiError.BadRequest('Its not form-data'))
             const recipeId = req.params.id;
             const recipeData = req.body;
             const recipes = await recipeService.updateRecipe({recipeId}, {recipeData});

@@ -5,7 +5,6 @@ const ApiError = require("../exceptions/api-error");
 class HistoryController {
     async createHistory(req, res, next) {
         try {
-            if (!req.headers['content-type'].startsWith('multipart/form-data')) next(ApiError.BadRequest('Its not form-data'))
             const images = req.files?.images;
 
             const arrPathImages = await fileService.getImages(images);
@@ -16,7 +15,7 @@ class HistoryController {
 
             return res.json(history);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
         }
     }
 
@@ -26,7 +25,7 @@ class HistoryController {
             const history = await historyService.getHistoryById(id);
             return res.json(history);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
         }
     }
     async getAllHistories(req, res, next) {
@@ -34,7 +33,8 @@ class HistoryController {
             const histories = await historyService.getAllHistories();
             return res.json(histories);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
 
@@ -43,7 +43,8 @@ class HistoryController {
             const histories = await historyService.getPopularHistories();
             return res.json(histories);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
 
@@ -52,7 +53,8 @@ class HistoryController {
             const histories = await historyService.getMostViewedHistories();
             return res.json(histories);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
 
@@ -61,7 +63,8 @@ class HistoryController {
             const histories = await historyService.getNewestHistories();
             return res.json(histories);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
     async getUserHistories(req, res, next) {
@@ -70,18 +73,19 @@ class HistoryController {
             const histories = await historyService.getUserHistories({userId});
             return res.json(histories);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
 
     async updateHistory(req, res, next) {
         try {
-            if (!req.headers['content-type'].startsWith('multipart/form-data')) next(ApiError.BadRequest('Its not form-data'))
             const historyId = req.params.id;
             const histories = await historyService.updateHistory({historyId});
             return res.json(histories);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
 
@@ -91,7 +95,8 @@ class HistoryController {
             const histories = await historyService.deleteHistory({historyId});
             return res.json(histories);
         } catch (error) {
-            next(error);
+            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+
         }
     }
 }

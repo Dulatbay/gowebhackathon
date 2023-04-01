@@ -1,6 +1,4 @@
 const BrandModel = require('../models/brand-model');
-const ApiError = require("../exceptions/api-error");
-
 class BrandService {
     async getAllBrands() {
         const brands = await BrandModel.find();
@@ -26,36 +24,15 @@ class BrandService {
         const brand = await BrandModel.findByIdAndDelete(brandId);
         return brand;
     }
-    async brandSubscribeToBrand(fromId, toId) {
-        try {
-            const toBrand = await BrandModel.findById(toId);
-            const fromBrand = await BrandModel.findById(fromId)
-            if (!toBrand || !fromBrand) throw ApiError.BadRequest('Brand not found');
 
-            toBrand.brandsFollowers.addToSet(fromId);
-            fromBrand.brandsSubscriptions.addToSet(toId);
-
-            await toBrand.save();
-            await fromBrand.save();
-        } catch (err) {
-            throw err;
-        }
+    async confirmBrand(id) {
+        const blog = await BrandModel.findByIdAndUpdate(id, {isActivated: true}, {new: true})
+        return blog;
     }
 
-    async userSubscribeToUser(fromId, toId) {
-        try {
-            const toUser = await BrandModel.findById(toId);
-            const fromUser = await BrandModel.findById(fromId)
-            if (!toBrand || !fromBrand) throw ApiError.BadRequest('Brand not found');
-
-            toBrand.brandsFollowers.addToSet(fromId);
-            fromBrand.brandsSubscriptions.addToSet(toId);
-
-            await toBrand.save();
-            await fromBrand.save();
-        } catch (err) {
-            throw err;
-        }
+    async banBrand(id) {
+        const blog = await BrandModel.findByIdAndUpdate(id, {isActivated: false}, {new: true})
+        return blog;
     }
 }
 

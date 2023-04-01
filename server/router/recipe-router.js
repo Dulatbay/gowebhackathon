@@ -1,9 +1,10 @@
 const Router = require('express')
 const recipeController = require('../controllers/recipe-controller')
 const authMiddleware = require('../middlewares/auth-middlware')
+const multipartMiddleware = require("../middlewares/multipart-middleware");
 const recipeRouter = new Router();
 
-recipeRouter.post('/', authMiddleware, recipeController.createRecipe)
+recipeRouter.post('/', authMiddleware, multipartMiddleware, recipeController.createRecipe)
 
 recipeRouter.get("/", recipeController.getAllRecipes)
 
@@ -17,7 +18,7 @@ recipeRouter.get("/newest", recipeController.getNewestRecipe)
 
 recipeRouter.get("/user/:userId", recipeController.getRecipeById)
 
-recipeRouter.put("/:id", authMiddleware, recipeController.updateRecipe)
+recipeRouter.put("/:id", authMiddleware, multipartMiddleware, recipeController.updateRecipe)
 
 recipeRouter.delete("/:id", authMiddleware, recipeController.deleteRecipe)
 

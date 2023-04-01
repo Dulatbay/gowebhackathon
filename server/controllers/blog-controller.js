@@ -6,7 +6,6 @@ const BlogModel = require("../models/blog-model");
 class BlogController {
     async createBlog(req, res, next) {
         try {
-            if (!req.headers['content-type'].startsWith('multipart/form-data')) next(ApiError.BadRequest('Its not form-data'))
             const images = req.files?.images;
             const arrPathImages = await fileService.getImages(images);
 
@@ -83,7 +82,6 @@ class BlogController {
 
     async updateBlog(req, res, next) {
         try {
-            if (!req.headers['content-type'].startsWith('multipart/form-data')) next(ApiError.BadRequest('Its not form-data'))
             const blogId = req.params.id;
             const blogData = req.body;
             const blogs = await blogService.updateBlog({blogId}, {blogData});
@@ -111,7 +109,6 @@ class BlogController {
             return res.json(await blogService.confirmBlog(id))
         } catch (error) {
             next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
-
         }
     }
 

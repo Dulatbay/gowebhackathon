@@ -61,16 +61,6 @@ class BlogService {
     }
    async getBlogsByUser(userId) {
        const blogs = await BlogModel.find({authors: userId})
-           .populate('author', '-password')
-           .populate({
-               path: 'comments',
-               populate: {path: 'author', select: '-password'},
-           })
-           .populate('likes', '-password')
-           .populate('brandLikes', '-password')
-           .populate('saves', '-password')
-           .populate('shares', '-password')
-           .populate('views', '-password');
        return blogs;
     }
 
