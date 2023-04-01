@@ -3,6 +3,8 @@ import styles from './main.module.css';
 import {HomeCategories} from "../HomeCategories/HomeCategories";
 import {HomeBrands} from "../HomeBrands/HomeBrands";
 import ItemsCarousel from "../ItemsCarousel/ItemsCarousel";
+import {SquareCard} from "../SquareCard/SqueareCard";
+import {CardSwiper} from "../../Swiper/CardSwiper";
 
 const Main = () => {
     return (
@@ -16,10 +18,12 @@ const Main = () => {
                 <p></p>
             </div>
             <main>
+                <CardSwiper items={[]}/>
+
                 <div className={styles.wrapper}>
-                    <ItemsCarousel items={[]} title={""}/>
-                    <HomeCategories/>
-                    <HomeBrands />
+                    {/*<ItemsCarousel items={[]} title={""}/>*/}
+                    {/*<HomeCategories/>*/}
+                    {/*<HomeBrands />*/}
                 </div>
             </main>
         </div>

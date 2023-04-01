@@ -1,21 +1,33 @@
 const BlogModel = require("../models/blog-model");
-const ApiError = require("../exceptions/api-error");
-
 class BlogService {
     async getAllBlogs() {
-        const res = await BlogModel.find({});
-        return res;
+        return (await BlogModel.find({}));
+    }
+    async getPopularBlogs() {
+        const blogs = await BlogModel.find()
+            .sort({likes: -1})
+            .populate('author', '-password')
+            .limit(10);
+        return blogs;
     }
 
-    async createBlog(authors, content, images, tags) {
-        const blog = new BlogModel({
-            authors: authors,
-            content: content,
-            images: images,
-            tags: tags
-        });
-        await blog.save();
-        return blog;
+    async getMostViewedBlogs() {
+        const blogs = await BlogModel.find()
+            .sort({views: -1})
+            .populate('author', '-password')
+            .limit(10);
+        return blogs;
+    }
+
+    async getNewestBlogs() {
+        const blogs = await BlogModel.find()
+            .sort({createdAt: -1})
+            .populate('author', '-password')
+            .limit(10);
+        return blogs;
+    }
+    async createBlog(blogData) {
+        return (await BlogModel.create(blogData));
     }
 
     async getBlogById(id) {
@@ -30,32 +42,18 @@ class BlogService {
         return blog;
     }
 
-    async updateBlog(id, blogData) {
-        const blog = await BlogModel.findById(id);
-        if (!blog) {
-            throw ApiError.BadRequest('Blog not found');
-        }
-        if (blogData.authors) {
-            blog.authors = blogData.authors;
-        }
-        if (blogData.content) {
-            blog.content = blogData.content;
-        }
-        if (blogData.images) {
-            blog.images = blogData.images;
-        }
-        if (blogData.tags) {
-            blog.tags = blogData.tags;
-        }
-        await blog.save();
+    async updateBlog(blogId, blogData) {
+        const blog = await BlogModel.findByIdAndUpdate(
+            blogId,
+            {$set: blogData},
+            {new: true}
+        );
         return blog;
     }
 
     async deleteBlog(id) {
-        const result = await BlogModel.deleteOne({_id: id});
-        if (result.deletedCount === 0) {
-            throw ApiError.BadRequest('Blog not found');
-        }
+        const blog = await BlogModel.findByIdAndDelete(id);
+        return blog;
     }
 
     async confirmBlog(id) {
@@ -67,12 +65,23 @@ class BlogService {
         const blog = await BlogModel.findByIdAndUpdate(id, {isActivated: false}, {new: true})
         return blog;
     }
-   async getBlogsByUser(id) {
-       const blogs = await BlogModel.find({ authors: id }).populate("authors");
+   async getBlogsByUser(userId) {
+       const blogs = await BlogModel.find({authors: userId})
+           .populate('author', '-password')
+           .populate({
+               path: 'comments',
+               populate: {path: 'author', select: '-password'},
+           })
+           .populate('likes', '-password')
+           .populate('brandLikes', '-password')
+           .populate('saves', '-password')
+           .populate('shares', '-password')
+           .populate('views', '-password');
        return blogs;
     }
 
 
 }
+// todo: delete same codes
 
 module.exports = new BlogService();

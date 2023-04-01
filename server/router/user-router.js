@@ -9,5 +9,6 @@ const userRouter = new Router();
 userRouter.get("/", authMiddleware, userController.getUsers)
 
 userRouter.get("/:id", authMiddleware, userController.getUserById)
+userRouter.get("/email/:email", userController.getUserByEmail)
 
 module.exports = userRouter
