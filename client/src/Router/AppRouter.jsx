@@ -1,17 +1,14 @@
 import {Route} from "react-router-dom";
-import {Layout} from "../components/Layout/Layout";
+import {HomePageLayout} from "../pages/HomePageLayout/HomePageLayout";
 import {WelcomePage} from "../pages/WelcomePage/WelcomePage";
+import {AuthPage} from "../pages/AuthPage/AuthPage";
 
 export const AppRouter = () => {
     return (
         <Route>
+            <Route path="/welcome" element={<AuthPage />} />
             <Route path="/welcome" element={<WelcomePage/>}/>
-            <Route path="/" element={<Layout/>}>
-                <Route path="calendar" />
-                <Route path="posts" />
-                <Route path="events" />
-                <Route path="calculator" />
-                <Route path="stores" />
+            <Route path="/" element={<HomePageLayout/>}>
             </Route>
         </Route>
     )

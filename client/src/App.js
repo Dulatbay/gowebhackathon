@@ -1,8 +1,11 @@
-import React from 'react';
-import {AppRouter} from "./Router/AppRouter";
-import './index.css'
+import React, {useEffect, useContext} from 'react';
+import {Context} from "./index";
+import {observer} from "mobx-react-lite";
+
 function App() {
-  return (<AppRouter/>);
+  return (
+     <></>
+  );
 }
 
-export default App;
+export default observer(App);
