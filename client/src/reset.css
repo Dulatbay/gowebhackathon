@@ -140,3 +140,7 @@ a.active::after {
     gap: 1em;
 }
 
+footer{
+    margin-top: 10vh;
+}
+

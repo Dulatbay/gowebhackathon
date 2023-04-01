@@ -1,20 +1,25 @@
 import React from 'react';
 import styles from './main.module.css';
-import {Categories} from "../Categories/Categories";
+import {HomeCategories} from "../HomeCategories/HomeCategories";
+import {HomeBrands} from "../HomeBrands/HomeBrands";
+import ItemsCarousel from "../ItemsCarousel/ItemsCarousel";
 
 const Main = () => {
     return (
         <div className={styles.main}>
             <div className={styles.bg}>
-                <div>
+                <div className={styles.text}>
                     <div>Eco.</div>
                     <div>Life.</div>
                     <div>Style.</div>
                 </div>
+                <p></p>
             </div>
             <main>
                 <div className={styles.wrapper}>
-                    <Categories/>
+                    <ItemsCarousel items={[]} title={""}/>
+                    <HomeCategories/>
+                    <HomeBrands />
                 </div>
             </main>
         </div>
