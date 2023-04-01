@@ -19,6 +19,7 @@ const EventSchema = new mongoose.Schema({
     followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     supportBrands: [{type: mongoose.Schema.Types.ObjectId, ref: 'Brand'}],
     tags: [{type: String}],
+    addresses: [{type: String, required: true}],
 });
 
 module.exports = mongoose.model('Event', EventSchema);

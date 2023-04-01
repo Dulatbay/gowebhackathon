@@ -15,6 +15,7 @@ const HistorySchema = new mongoose.Schema({
     saves: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     shares: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     tags: [{type: String}],
+    views: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
 module.exports = mongoose.model('History', HistorySchema);

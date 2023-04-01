@@ -3,7 +3,7 @@ const {Schema, model, Decimal128} = require("mongoose");
 
 const ProductSchema = new Schema({
     brand: {type: Schema.Types.ObjectId, ref: 'Brand'},
-    category: {type: Schema.Types.ObjectId, ref: 'Category'},
+    categories: [{type: Schema.Types.ObjectId, ref: 'Category', require: true}],
     price: {type: Decimal128, require: true},
     title: {type: String, require: true},
     content: {type: String, require: true},
