@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 const EventSchema = new mongoose.Schema({
-    authors: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    authors: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     createdAt: {type: Date, default: Date.now},
     eventAt: {
         type: Date, default: () => {
@@ -10,7 +13,8 @@ const EventSchema = new mongoose.Schema({
             return date;
         }
     },
-    content: {type: String, required: true},
+    title: {type: String, required: true},
+    content: {type: String, required: true}, // it's html
     images: [{type: String}],
     likes: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     brandLikes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Brand'}],
@@ -21,7 +25,14 @@ const EventSchema = new mongoose.Schema({
     followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     supportBrands: [{type: mongoose.Schema.Types.ObjectId, ref: 'Brand'}],
     tags: [{type: String}],
-    addresses: [{type: String, required: true}],
+    address: {type: String, required: false},
 });
+
+
+EventSchema.methods.addComment = async function (commentId) {
+    this.comments.push(commentId);
+    await this.save();
+}
+
 
 module.exports = mongoose.model('Event', EventSchema);

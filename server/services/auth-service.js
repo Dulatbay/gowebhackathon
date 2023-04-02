@@ -10,7 +10,7 @@ class AuthService {
     async registration(email, password){
         const isUnique = (await UserModel.findOne({email})) == null
         if(!isUnique){
-            throw  ApiError.BadRequest(`Email ${email} must to be unique`)
+            throw  ApiError.BadRequest(`Почта ${email} уже используется`)
         }
         const hashPassword = await bcrypt.hash(password, 3);
 
@@ -34,7 +34,7 @@ class AuthService {
 
     async activate(activationLink){
         const link = await ActivationLinkModel.findOne({activationLink})
-        if(!link) throw  ApiError.BadRequest("Activation link is incorrect")
+        if(!link) throw  ApiError.BadRequest("Ссылка активации не действительна")
         const user = await UserModel.findById(link.user);
         user.isActivated = true;
         await user.save();
@@ -45,11 +45,11 @@ class AuthService {
     async login(email, password) {
         const user = await UserModel.findOne({email})
 
-        if(!user) throw ApiError.BadRequest("User not found")
+        if(!user) throw ApiError.BadRequest("Неверный логин")
 
 
         const isPasswordEquals = await bcrypt.compare(password, user.password)
-        if(!isPasswordEquals) throw ApiError.BadRequest("Incorrect password")
+        if(!isPasswordEquals) throw ApiError.BadRequest("Неверный пароль")
 
 
         const userDto = new UserDto(user)

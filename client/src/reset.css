@@ -24,12 +24,14 @@ a:active {
     outline: none;
 }
 
-/* Links */
-
-a, a:link, a:visited {
-    color: inherit;
+.header a{
+    color: black;
     text-decoration: none;
-    display: inline-block;
+}
+
+.header a.active{
+    color: #0f2786;
+    font-weight: 500;
 }
 
 .default-link{
@@ -187,6 +189,7 @@ footer{
     position: relative;
     width: 80px;
     height: 80px;
+    left: 50%;
 }
 .lds-roller div {
     animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
@@ -362,3 +365,12 @@ footer{
 .important-date{
     background-color: aqua;
 }
+
+
+
+
+
+
+
+
+

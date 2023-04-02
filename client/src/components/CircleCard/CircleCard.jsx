@@ -10,7 +10,7 @@ export function CircleCard({image, title}) {
             </div>
             <div className={styles.title}>
                 <h3>{title}</h3>
-                <Button variant={"outline-primary"}>Перейти</Button>
+                <Button variant={"outline-dark"}>Перейти</Button>
             </div>
         </div>
     )

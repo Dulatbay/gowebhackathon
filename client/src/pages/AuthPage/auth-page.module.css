@@ -104,3 +104,23 @@
     cursor: pointer;
     opacity: 0.7;
 }
+
+
+
+
+@media  (max-width: 500px) {
+    .container{
+        width: 350px;
+        height: 450px;
+        font-size: 0.7em;
+    }
+}
+
+
+@media  (max-width: 350px) {
+    .container{
+        width: 100vw;
+        height: 100vh;
+        font-size: 0.7em;
+    }
+}

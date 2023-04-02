@@ -7,7 +7,6 @@ import styles from './blog.module.css'
 import $api, {API_URL} from "../../http";
 import {Context} from "../../index";
 import BlogService from "../../services/BlogService";
-import {s} from 'mobx'
 import {observer} from "mobx-react-lite";
 
 const Blog = ({blog}) => {

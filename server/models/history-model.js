@@ -14,4 +14,10 @@ const HistorySchema = new mongoose.Schema({
     views: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
+HistorySchema.methods.addComment = async function(commentId) {
+    this.comments.push(commentId);
+    await this.save();
+}
+
+
 module.exports = mongoose.model('History', HistorySchema);

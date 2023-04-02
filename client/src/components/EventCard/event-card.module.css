@@ -1,0 +1,13 @@
+.card {
+    width: 500px;
+    margin: auto;
+}
+
+.footer {
+    padding-left: 15px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}

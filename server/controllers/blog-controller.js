@@ -8,8 +8,13 @@ class BlogController {
         try {
             const images = req.files?.images;
             const arrPathImages = await fileService.getImages(images);
+            const tags = req.body?.tags;
 
-            const blogData = {...req.body, images: arrPathImages};
+            const blogData = {
+                ...req.body,
+                images: arrPathImages,
+                tags: tags?.split(' ')
+            };
 
             const blog = await blogService.createBlog(blogData);
             return res.json(blog);
@@ -179,7 +184,8 @@ class BlogController {
             next(error)
         }
     }
-  async removeTag(req, res, next) {
+
+    async removeTag(req, res, next) {
         try {
             const tag = req.body.tag
             const blogId = req.params.id

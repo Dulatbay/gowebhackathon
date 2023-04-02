@@ -7,6 +7,7 @@ const recipeRouter = require('./recipe-router')
 const brandRouter = require('./brand-router')
 const categoriesRouter = require('./category-router')
 const productsRouter = require('./product-router')
+const eventRouter = require('./event-router')
 
 
 const router = new Router();
@@ -26,6 +27,8 @@ router.use('/brands', brandRouter)
 router.use('/categories', categoriesRouter)
 
 router.use('/products', productsRouter)
+
+router.use('/events', eventRouter)
 
 
 module.exports = router

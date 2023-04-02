@@ -24,10 +24,10 @@ $api.interceptors.response.use((config) => config, async (error) => {
             return $api.request(request);
         } catch (e) {
             console.log(e)
+            throw e;
         }
 
     }
-    console.log("При интерцептора произошка ошибка. Разбирайся:)")
     throw error
 })
 

@@ -7,6 +7,8 @@ import {CardSwiper} from "../Swiper/CardSwiper";
 import CategoryService from "../../services/CategoryService";
 import BlogService from "../../services/BlogService";
 import {API_URL} from "../../http";
+import {Footer} from "../Footer/Footer";
+import {ToastContainer} from "react-toastify";
 
 const Main = () => {
     const [categories, setCategories] = useState([]);
@@ -31,28 +33,33 @@ const Main = () => {
     useEffect(() => {
         getAllCategories()
         getTopBlogs()
+
     }, [])
 
 
     return (
-        <div className={styles.main}>
-            <div className={styles.bg}>
-                <div className={styles.text}>
-                    <div>Eco.</div>
-                    <div>Life.</div>
-                    <div>Style.</div>
+        <>
+            <ToastContainer position={"bottom-right"}/>
+            <div className={styles.main}>
+                <div className={styles.bg}>
+                    <div className={styles.text}>
+                        <div>Eco.</div>
+                        <div>Life.</div>
+                        <div>Style.</div>
+                    </div>
+                    <p></p>
                 </div>
-                <p></p>
+                <main>
+                    <div className={styles.wrapper}>
+                        <HomeCategories>
+                            <CardSwiper cards={getCardsByCategories(categories)}/>
+                        </HomeCategories>
+                        <HomeBlogs blogs={blogs}/>
+                    </div>
+                </main>
             </div>
-            <main>
-                <div className={styles.wrapper}>
-                    <HomeCategories>
-                        <CardSwiper cards={getCardsByCategories(categories)}/>
-                    </HomeCategories>
-                    <HomeBlogs blogs={blogs}/>
-                </div>
-            </main>
-        </div>
+            <Footer/>
+        </>
     );
 }
 

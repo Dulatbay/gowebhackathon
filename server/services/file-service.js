@@ -21,7 +21,7 @@ class FileService {
         try {
             if(!file) return '';
             const mime = file.mimetype.split('/')
-            if (mime[0] !== 'image') throw ApiError.BadRequest('Its not image!')
+            if (mime[0] !== 'image') throw ApiError.BadRequest('Вы можете загрузить только изображение')
             const fileFormat = mime[1];
 
             const fileName = uuid.v4() + `.${fileFormat}`;

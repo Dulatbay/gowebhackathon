@@ -4,15 +4,19 @@ const fileService = require('../services/file-service');
 const ApiError = require("../exceptions/api-error");
 
 class EventController {
-    async create(req, res, next) {
+    async createEvent(req, res, next) {
         try {
             const images = req.files?.images;
             const arrPathImages = await fileService.getImages(images);
+            const tags = req.body?.tags;
+            const eventData = {
+                ...req.body, images: arrPathImages,
+                tags: tags?.split(' ')
+            }
 
-            const blogData = {...req.body, images: arrPathImages};
 
-            const blog = await eventService.createEvent(blogData);
-            return res.json(blog);
+            const event = await eventService.createEvent(eventData);
+            return res.json(event);
         } catch (error) {
             console.log(error);
             next(error)
@@ -22,8 +26,8 @@ class EventController {
     async getEventById(req, res, next) {
         try {
             const {id} = req.params;
-            const blog = await eventService.getEventById(id);
-            return res.json(blog);
+            const event = await eventService.getEventById(id);
+            return res.json(event);
         } catch (error) {
             console.log(error);
             next(error)
@@ -32,8 +36,8 @@ class EventController {
 
     async getAllEvents(req, res, next) {
         try {
-            const blogs = await eventService.getAllEvents();
-            return res.json(blogs);
+            const events = await eventService.getAllEvents();
+            return res.json(events);
         } catch (error) {
             console.log(error);
             next(error)
@@ -42,8 +46,8 @@ class EventController {
 
     async getPopularEvents(req, res, next) {
         try {
-            const blogs = await eventService.getPopularEvents();
-            return res.json(blogs);
+            const events = await eventService.getPopularEvents();
+            return res.json(events);
         } catch (error) {
             console.log(error);
             next(error)
@@ -53,8 +57,8 @@ class EventController {
 
     async getNewestEvent(req, res, next) {
         try {
-            const blogs = await eventService.getNewestEvents();
-            return res.json(blogs);
+            const events = await eventService.getNewestEvents();
+            return res.json(events);
         } catch (error) {
             console.log(error);
             next(error)
@@ -64,8 +68,8 @@ class EventController {
 
     async getMostViewedEvents(req, res, next) {
         try {
-            const blogs = await eventService.getMostViewedEvents();
-            return res.json(blogs);
+            const events = await eventService.getMostViewedEvents();
+            return res.json(events);
         } catch (error) {
             console.log(error);
             next(error)
@@ -76,8 +80,8 @@ class EventController {
     async getUserEvents(req, res, next) {
         try {
             const userId = req.params.userId;
-            const blogs = await eventService.getEventsByUser({userId});
-            return res.json(blogs);
+            const events = await eventService.getEventsByUser({userId});
+            return res.json(events);
         } catch (error) {
             console.log(error);
             next(error)
@@ -87,10 +91,10 @@ class EventController {
 
     async updateEvent(req, res, next) {
         try {
-            const blogId = req.params.id;
-            const blogData = req.body;
-            const blogs = await eventService.updateEvent({blogId}, {blogData});
-            return res.json(blogs);
+            const eventId = req.params.id;
+            const eventData = req.body;
+            const events = await eventService.updateEvent({eventId}, {eventData});
+            return res.json(events);
         } catch (error) {
             console.log(error);
             next(error)
@@ -100,8 +104,8 @@ class EventController {
 
     async deleteEvent(req, res, next) {
         try {
-            const blogId = req.params.id;
-            const result = await eventService.deleteEvent({blogId});
+            const eventId = req.params.id;
+            const result = await eventService.deleteEvent({eventId});
             return res.json(result);
         } catch (error) {
             console.log(error);
@@ -146,9 +150,9 @@ class EventController {
 
     async addLike(req, res, next) {
         try {
-            const blogId = req.params.id
+            const eventId = req.params.id
             const userId = req.user.id
-            const result = await eventService.addLike(blogId, userId);
+            const result = await eventService.addLike(eventId, userId);
             return res.json(result)
         } catch (error) {
             console.log(error);
@@ -158,9 +162,9 @@ class EventController {
 
     async removeLike(req, res, next) {
         try {
-            const blogId = req.params.id
+            const eventId = req.params.id
             const userId = req.user.id
-            const result = await eventService.removeLike(blogId, userId);
+            const result = await eventService.removeLike(eventId, userId);
             return res.json(result)
         } catch (error) {
             console.log(error);
@@ -171,19 +175,20 @@ class EventController {
     async addTag(req, res, next) {
         try {
             const tag = req.body.tag
-            const blogId = req.params.id
-            const result = await eventService.addTag(blogId, tag);
+            const eventId = req.params.id
+            const result = await eventService.addTag(eventId, tag);
             return res.json(result)
         } catch (error) {
             console.log(error);
             next(error)
         }
     }
+
     async removeTag(req, res, next) {
         try {
             const tag = req.body.tag
-            const blogId = req.params.id
-            const result = await eventService.removeTag(blogId, tag);
+            const eventId = req.params.id
+            const result = await eventService.removeTag(eventId, tag);
             return res.json(result)
         } catch (error) {
             console.log(error);

@@ -10,9 +10,12 @@ authRouter.post('/login',
     authController.login)
 
 
-authRouter.post("/logout", authController.logout)
+authRouter.post("/logout",    authController.logout)
 
-authRouter.post("/registration", authController.registration)
+authRouter.post("/registration",
+    body("email").isEmail(),
+    body("password").isLength({min: 4, max: 32}),
+    authController.registration)
 
 authRouter.get("/activate/:link", authController.activate)
 

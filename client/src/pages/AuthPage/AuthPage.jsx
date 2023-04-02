@@ -4,6 +4,8 @@ import {useContext, useEffect, useRef, useState} from "react";
 import Circle from "../../components/Circle/Circle";
 import {Context} from "../../index";
 import {useNavigate} from 'react-router-dom';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const AuthPage = () => {
     const {store} = useContext(Context)
@@ -16,13 +18,15 @@ export const AuthPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isClicked, setIsClicked] = useState(false);
+    const [notifications, setNotifications] = useState([]);
 
     // reset on re-renders
     circleRefs.current = [];
-
     useEffect(() => {
 
-
+        if (store.isAuth) {
+            navigate(`/`);
+        }
 
         const {innerWidth, innerHeight} = window;
         circleRefs.current.forEach(ref => ref.moveTo(innerWidth / 2, innerHeight / 2));
@@ -51,13 +55,10 @@ export const AuthPage = () => {
 
     const loginClick = () => [
         store.login(email, password).then(res => {
-            console.log(res); // todo: make error div
-            if(res.status === 200){
-                console.log("OK")
+            if (res.status === 200) {
                 navigate(`/`);
-            }
-            else{
-                console.log(res)
+            } else {
+                toast.error(res?.data?.message ? res.data.message : "Ошибка при валидации данных")
             }
         }).finally((r) => {
             setIsClicked(false);
@@ -67,12 +68,11 @@ export const AuthPage = () => {
 
     const regClick = () => {
         store.registration(email, password).then(res => {
-            if(res.status === 200){
-                    console.log("OK")
-                    navigate(`/`);
-            }
-            else{
-                console.log(res)
+            if (res.status === 200) {
+                navigate(`/`);
+            } else {
+                console.log(res?.data?.message);
+                toast.error(res?.data?.message !== null ? res.data.message : "Ошибка при валидации")
             }
         }).finally(() => {
             setIsClicked(false);
@@ -88,12 +88,13 @@ export const AuthPage = () => {
 
     }
 
+
     return (
         <>
+            <ToastContainer position={"bottom-right"}/>
             <Circle size={'sm'} ref={addCircleRef} delay={0}/>
             <Circle size={'md'} ref={addCircleRef} delay={0.1}/>
             <Circle size={'lg'} ref={addCircleRef} delay={0.2}/>
-            {/*TODO: write error messages*/}
             <div className={styles.bg}></div>
             <div className={styles.container}>
                 <div className={styles.logoContainer}>
