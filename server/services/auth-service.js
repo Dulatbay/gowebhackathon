@@ -44,6 +44,7 @@ class AuthService {
 
     async login(email, password) {
         const user = await UserModel.findOne({email})
+
         if(!user) throw ApiError.BadRequest("User not found")
 
 
@@ -67,27 +68,20 @@ class AuthService {
     }
 
     async refresh(refreshToken) {
-        console.log(1)
         if(!refreshToken) throw ApiError.UnauthorizedError()
-        console.log(2)
 
         const userData = tokenService.validateRefreshToken(refreshToken)
-        console.log(3)
         const tokenFromDb = await tokenService.findToken(refreshToken)
-        console.log(4)
         if(!userData || !tokenFromDb){
             throw ApiError.UnauthorizedError();
         }
-        console.log(5)
 
         const user = await UserModel.findById(userData.id)
-        console.log(6)
         const userDto = new UserDto(user)
 
         const tokens = tokenService.generateTokens({...userDto})
-        console.log(7)
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
-        console.log(8)
+
         return {...tokens, user: userDto}
     }
 

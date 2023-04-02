@@ -1,4 +1,4 @@
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import {HomePageLayout} from "../pages/HomePageLayout/HomePageLayout";
 import {WelcomePage} from "../pages/WelcomePage/WelcomePage";
 import {AuthPage} from "../pages/AuthPage/AuthPage";
@@ -9,20 +9,35 @@ import {Blogs} from "../components/Blogs/Blogs";
 import {Store} from "../components/Store/Store";
 import {Recipes} from "../components/Recipes/Recipes";
 import {About} from "../components/About/About";
+import {Context} from "../index";
+import {useContext, useEffect} from "react";
 
 export const AppRouter = () => {
+    const navigate = useNavigate()
+    const {store} = useContext(Context)
+    useEffect(() => {
+        const checkAuthentication = async () => {
+            if (localStorage.getItem('token')) {
+                await store.check();
+                if (store.isAuth) {
+                    navigate(`/`);
+                }
+            }
+        };
+        checkAuthentication();
+    }, [store])
     return (
         <Routes>
-            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/auth" element={<AuthPage/>}/>
             <Route path="/welcome" element={<WelcomePage/>}/>
             <Route path="/" element={<HomePageLayout/>}>
-                <Route path={'/'} element={<Main />} />
-                <Route path={'/events'} element={<Events />} />
-                <Route path={'/histories'} element={<Histories />} />
-                <Route path={'/blogs'} element={<Blogs />} />
-                <Route path={'/store'} element={<Store />} />
-                <Route path={'/recipes'} element={<Recipes />} />
-                <Route path={'/about'} element={<About />} />
+                <Route path={'/'} element={<Main/>}/>
+                <Route path={'/events'} element={<Events/>}/>
+                <Route path={'/histories'} element={<Histories/>}/>
+                <Route path={'/blogs'} element={<Blogs/>}/>
+                <Route path={'/store'} element={<Store/>}/>
+                <Route path={'/recipes'} element={<Recipes/>}/>
+                <Route path={'/about'} element={<About/>}/>
             </Route>
         </Routes>
     )

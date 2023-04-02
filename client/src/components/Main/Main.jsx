@@ -8,7 +8,7 @@ import CategoryService from "../../services/CategoryService";
 import BlogService from "../../services/BlogService";
 import {API_URL} from "../../http";
 
-const Main = memo(() => {
+const Main = () => {
     const [categories, setCategories] = useState([]);
     const [blogs, setBlogs] = useState([]);
     const getAllCategories = () => {
@@ -54,6 +54,6 @@ const Main = memo(() => {
             </main>
         </div>
     );
-})
+}
 
 export default Main;

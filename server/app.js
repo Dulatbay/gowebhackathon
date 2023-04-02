@@ -5,11 +5,12 @@ const errorMiddleware = require("./middlewares/error-middleware");
 const router = require("./router");
 const mongoose = require("mongoose");
 const fileUpload = require('express-fileupload')
+const bodyParser = require('body-parser');
 require('dotenv').config()
 
 const DB_URL = process.env.DB_URL
 const app = express();
-
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(fileUpload({}));
 app.use(express.json())

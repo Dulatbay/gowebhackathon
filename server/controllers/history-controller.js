@@ -5,6 +5,7 @@ const ApiError = require("../exceptions/api-error");
 class HistoryController {
     async createHistory(req, res, next) {
         try {
+            console.log(req.files)
             const images = req.files?.images;
 
             const arrPathImages = await fileService.getImages(images);

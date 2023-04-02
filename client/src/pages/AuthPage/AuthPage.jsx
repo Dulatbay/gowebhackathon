@@ -1,14 +1,16 @@
 import styles from './auth-page.module.css'
 import {SiOverleaf} from 'react-icons/si'
-import {memo, useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
+import {useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
 import Circle from "../../components/Circle/Circle";
 import {Context} from "../../index";
-import {Navigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
-export const AuthPage = memo(() => {
+export const AuthPage = () => {
     const {store} = useContext(Context)
 
     const circleRefs = useRef([]);
+
+    const navigate = useNavigate()
 
     const [isRegistration, setIsRegistration] = useState(true);
     const [email, setEmail] = useState('');
@@ -19,6 +21,9 @@ export const AuthPage = memo(() => {
     circleRefs.current = [];
 
     useEffect(() => {
+
+
+
         const {innerWidth, innerHeight} = window;
         circleRefs.current.forEach(ref => ref.moveTo(innerWidth / 2, innerHeight / 2));
 
@@ -47,7 +52,13 @@ export const AuthPage = memo(() => {
 
     const loginClick = () => [
         store.login(email, password).then(res => {
-            console.log(res)
+            if(res.status === 200){
+                console.log("OK")
+                navigate(`/blogs`);
+            }
+            else{
+                console.log(res)
+            }
         }).finally((r) => {
             setIsClicked(false);
         })
@@ -56,7 +67,13 @@ export const AuthPage = memo(() => {
 
     const regClick = () => {
         store.registration(email, password).then(res => {
-            console.log(res)
+            if(res.status === 200){
+                    console.log("OK")
+                    navigate(`/blogs`);
+            }
+            else{
+                console.log(res)
+            }
         }).finally(() => {
             setIsClicked(false);
         })
@@ -70,8 +87,6 @@ export const AuthPage = memo(() => {
         }
 
     }
-    if (store.isAuth)
-        return <Navigate to={'/'}/>
 
     return (
         <>
@@ -126,4 +141,4 @@ export const AuthPage = memo(() => {
             </div>
         </>
     )
-})
+}

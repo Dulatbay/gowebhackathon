@@ -20,11 +20,14 @@ $api.interceptors.response.use((config) => config, async (error) => {
         try {
             const res = await axios.get(`${API_URL}/api/auth/refresh`, {withCredentials: true})
             localStorage.setItem('token', res.data.accessToken)
+            console.log("Отработал интерцептор")
             return $api.request(request);
         } catch (e) {
             console.log(e)
         }
+
     }
+    console.log("При интерцептора произошка ошибка. Разбирайся:)")
     throw error
 })
 
