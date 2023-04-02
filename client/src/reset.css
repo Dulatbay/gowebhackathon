@@ -355,5 +355,10 @@ footer{
     line-height: 1.75;
 }
 
+.welcome-page{
+    background-color: #000;
+}
 
-
+.important-date{
+    background-color: aqua;
+}

@@ -14,7 +14,7 @@ import {memo, useContext, useEffect, useState} from "react";
 import {observer} from "mobx-react-lite";
 import {Loader} from "../components/Loader/Loader";
 
-export const AppRouter = memo(() => {
+export const AppRouter = () => {
     const navigate = useNavigate()
     const {store} = useContext(Context)
     const [isLoading, setIsLoading] = useState(0);
@@ -43,4 +43,4 @@ export const AppRouter = memo(() => {
             </Route>
         </Routes>
     )
-})
+}
