@@ -8,12 +8,7 @@ const ProductSchema = new Schema({
     title: {type: String, require: true},
     content: {type: String, require: true},
     images: [{type: String}],
-    reviews: [{
-        user: {type: Schema.Types.ObjectId, ref: 'User'},
-        rating: {type: Schema.Types.Number, require: true},
-        content: {type: Schema.Types.String, require: true},
-        createAt: {type: Date, require: Date.now},
-    }]
+    reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
 })
 
 module.exports = model("Product", ProductSchema);

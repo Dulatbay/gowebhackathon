@@ -1,6 +1,6 @@
 import styles from './auth-page.module.css'
 import {SiOverleaf} from 'react-icons/si'
-import {useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import Circle from "../../components/Circle/Circle";
 import {Context} from "../../index";
 import {useNavigate} from 'react-router-dom';
@@ -33,7 +33,6 @@ export const AuthPage = () => {
 
         window.addEventListener("pointermove", onMove);
 
-        console.log(1);
         return () => window.removeEventListener("pointermove", onMove);
     }, []);
 
@@ -52,9 +51,10 @@ export const AuthPage = () => {
 
     const loginClick = () => [
         store.login(email, password).then(res => {
+            console.log(res); // todo: make error div
             if(res.status === 200){
                 console.log("OK")
-                navigate(`/blogs`);
+                navigate(`/`);
             }
             else{
                 console.log(res)
@@ -69,7 +69,7 @@ export const AuthPage = () => {
         store.registration(email, password).then(res => {
             if(res.status === 200){
                     console.log("OK")
-                    navigate(`/blogs`);
+                    navigate(`/`);
             }
             else{
                 console.log(res)

@@ -10,22 +10,24 @@ import {Store} from "../components/Store/Store";
 import {Recipes} from "../components/Recipes/Recipes";
 import {About} from "../components/About/About";
 import {Context} from "../index";
-import {useContext, useEffect} from "react";
+import {memo, useContext, useEffect, useState} from "react";
+import {observer} from "mobx-react-lite";
+import {Loader} from "../components/Loader/Loader";
 
-export const AppRouter = () => {
+export const AppRouter = memo(() => {
     const navigate = useNavigate()
     const {store} = useContext(Context)
+    const [isLoading, setIsLoading] = useState(0);
     useEffect(() => {
         const checkAuthentication = async () => {
             if (localStorage.getItem('token')) {
                 await store.check();
-                if (store.isAuth) {
-                    navigate(`/`);
-                }
             }
         };
-        checkAuthentication();
-    }, [store])
+        setIsLoading(1);
+        checkAuthentication().then(() => setIsLoading(0));
+    }, [])
+    if (isLoading) return <Loader />
     return (
         <Routes>
             <Route path="/auth" element={<AuthPage/>}/>
@@ -41,4 +43,4 @@ export const AppRouter = () => {
             </Route>
         </Routes>
     )
-}
+})

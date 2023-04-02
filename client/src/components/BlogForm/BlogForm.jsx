@@ -10,6 +10,7 @@ const BlogForm = () => {
         const [content, setContent] = useState('');
         const [images, setImages] = useState([]);
         const [title, setTitle] = useState('');
+        const [tags, setTags] = useState('');
         const {store} = useContext(Context)
         const navigate = useNavigate()
 
@@ -23,8 +24,12 @@ const BlogForm = () => {
             setImages(...files)
         };
 
-        const handleTitleChange = (event) => {
-            setTitle(event.target.value);
+    const handleTitleChange = (event) => {
+        setTitle(event.target.value);
+    };
+
+    const handleTagsChange = (event) => {
+            setTags(event.target.value);
         };
 
         const handleSubmit = async (event) => {
@@ -34,6 +39,7 @@ const BlogForm = () => {
             formData.append('content', content);
             formData.append('authors', store.user.id);
             formData.append(`images`, images);
+            formData.append('tags', tags.split(' '));
             await BlogService.fetchCreate(formData).then(res => {
                 if (res.status === 200) {
                     console.log("OK")
@@ -46,17 +52,22 @@ const BlogForm = () => {
         return (
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="title">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" placeholder="Enter title" value={title} onChange={handleTitleChange}/>
+                    <Form.Label>Загаловок</Form.Label>
+                    <Form.Control type="text" placeholder="Введите загаловок" value={title}
+                                  onChange={handleTitleChange}/>
                 </Form.Group>
 
                 <Form.Group controlId="content">
-                    <Form.Label>Content</Form.Label>
+                    <Form.Label>Контент</Form.Label>
                     <ReactQuill value={content} onChange={handleContentChange}/>
                 </Form.Group>
                 <Form.Group controlId="images">
-                    <Form.Label>Images:</Form.Label>
+                    <Form.Label>Картинки:</Form.Label>
                     <Form.Control type="file" multiple onChange={handleImageChange}/>
+                </Form.Group>
+                <Form.Group controlId="tags">
+                    <Form.Label>Тэги:</Form.Label>
+                    <Form.Control type="text" placeholder="Введите через пробел тэги..." value={tags} onChange={handleTagsChange}/>
                 </Form.Group>
                 {images.length > 0 && (
                     <Form.Group>
@@ -65,8 +76,8 @@ const BlogForm = () => {
                         ))}
                     </Form.Group>
                 )}
-                <Button variant="primary" type="submit">
-                    Submit
+                <Button variant="primary" type="submit" className={"mt-5"}>
+                    Отправить
                 </Button>
             </Form>
         );

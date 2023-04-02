@@ -16,6 +16,61 @@
 
 .footer {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
+
+.footerLeft{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footerRight{
+    opacity: 0.6;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.like{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px
+}
+
+.comment{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px
+}
+
+.share{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px
+}
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title{
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    background-color: #fff;
+}
+
+
+
+
+

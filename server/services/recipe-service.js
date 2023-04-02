@@ -1,13 +1,15 @@
+
 const RecipeModel = require("../models/recipe-model");
+
 class RecipeService {
     async getAllRecipes() {
         return (await RecipeModel.find({}));
     }
+
     async getPopularRecipes() {
         const recipes = await RecipeModel.find()
             .sort({likes: -1})
             .populate('author', '-password')
-            .limit(10);
         return recipes;
     }
 
@@ -15,7 +17,6 @@ class RecipeService {
         const recipes = await RecipeModel.find()
             .sort({views: -1})
             .populate('author', '-password')
-            .limit(10);
         return recipes;
     }
 
@@ -23,22 +24,15 @@ class RecipeService {
         const recipes = await RecipeModel.find()
             .sort({createdAt: -1})
             .populate('author', '-password')
-            .limit(10);
         return recipes;
     }
+
     async createRecipe(recipeData) {
         return (await RecipeModel.create(recipeData));
     }
 
     async getRecipeById(id) {
         const recipe = await RecipeModel.findById(id)
-            .populate('authors', 'username')
-            .populate('likes', 'username')
-            .populate('brandLikes', 'name')
-            .populate('comments.author', 'username')
-            .populate('saves', 'username')
-            .populate('shares', 'username')
-            .populate('supportBrands', 'name');
         return recipe;
     }
 
@@ -65,20 +59,72 @@ class RecipeService {
         const recipe = await RecipeModel.findByIdAndUpdate(id, {isActivated: false}, {new: true})
         return recipe;
     }
+
     async getRecipesByUser(userId) {
         const recipes = await RecipeModel.find({authors: userId})
-            .populate('author', '-password')
-            .populate({
-                path: 'comments',
-                populate: {path: 'author', select: '-password'},
-            })
-            .populate('likes', '-password')
-            .populate('brandLikes', '-password')
-            .populate('saves', '-password')
-            .populate('shares', '-password')
-            .populate('views', '-password');
         return recipes;
     }
+
+
+    async addComment(recipeId, commentId) {
+        const recipe = await RecipeModel.findById(recipeId);
+        if (!recipe) {
+            throw new Error('Blog not found');
+        }
+        await recipe.addComment(commentId);
+        return recipe;
+    }
+
+    async addTag(recipeId, tag) {
+        const recipe = await RecipeModel.findById(recipeId);
+        if (!recipe) {
+            throw new Error('Blog not found');
+        }
+        if (!recipe.tags.includes(tag)) {
+            recipe.tags.push(tag);
+            await recipe.save();
+        }
+        return recipe;
+    }
+
+    async removeTag(recipeId, tag) {
+        const recipe = await RecipeModel.findById(recipeId);
+        if (!recipe) {
+            throw new Error('Recipe not found');
+        }
+        const index = recipe.tags.indexOf(tag);
+        if (index !== -1) {
+            recipe.tags.splice(index, 1);
+            await recipe.save();
+        }
+        return recipe;
+    }
+
+    async removeLike(recipeId, userId) {
+        const recipe = await RecipeModel.findById(recipeId);
+        if (!recipe) {
+            throw new Error('Recipe not found');
+        }
+        const index = recipe.likes.indexOf(userId);
+        if (index !== -1) {
+            recipe.likes.splice(index, 1);
+            await recipe.save();
+        }
+        return recipe;
+    }
+
+    async addLike(recipeId, userId) {
+        const recipe = await RecipeModel.findById(recipeId);
+        if (!recipe) {
+            throw new Error('Blog not found');
+        }
+        if (!recipe.likes.includes(userId)) {
+            recipe.likes.push(userId);
+            await recipe.save();
+        }
+        return recipe;
+    }
+
 
 
 }

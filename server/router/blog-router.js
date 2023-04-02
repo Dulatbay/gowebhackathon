@@ -11,16 +11,13 @@ blogRouter.post('/',   authMiddleware,
                             body("content").exists(),
                             blogController.createBlog)
 
+
+
 blogRouter.get("/", blogController.getAllBlogs)
-
 blogRouter.get("/:id", blogController.getBlogById)
-
 blogRouter.get("/popular", blogController.getPopularBlogs)
-
 blogRouter.get("/most-viewed", blogController.getMostViewedBlogs)
-
 blogRouter.get("/newest", blogController.getNewestBlog)
-
 blogRouter.get("/user/:userId", blogController.getUserBlogs)
 
 blogRouter.put("/:id", authMiddleware, multipartMiddleware, blogController.updateBlog)
@@ -29,8 +26,18 @@ blogRouter.delete("/:id", authMiddleware, blogController.deleteBlog)
 
 
 blogRouter.get("/activate/:id", blogController.confirmBlog)
-
 blogRouter.get("/ban/:id", blogController.banBlog)
+
+
+
+blogRouter.patch("/:id/comment",authMiddleware, blogController.addComment);
+
+blogRouter.patch("/:id/like", authMiddleware, blogController.addLike);
+blogRouter.delete("/:id/like", authMiddleware, blogController.removeLike);
+
+
+blogRouter.patch("/:id/tag", authMiddleware, blogController.addTag)
+blogRouter.delete("/:id/tag", authMiddleware, blogController.removeTag)
 
 
 module.exports = blogRouter

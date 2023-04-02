@@ -1,15 +1,17 @@
 
 const productService = require('../services/product-service');
+const fileService = require("../services/file-service");
 class ProductController {
 
     async createProduct(req, res) {
         try {
-            const productData = req.body;
-            const product = await productService.createProduct(productData);
-            res.status(201).json(product);
+            const images = req.files?.images;
+            const arrPathImages = await fileService.getImages(images);
+
+            const productData = {...req.body, images: arrPathImages};
+            res.status(201).json(productData);
         } catch (err) {
             console.error(err);
-            res.status(500).json({ message: 'Internal server error' });
         }
     }
 
@@ -19,7 +21,6 @@ class ProductController {
             res.json(products);
         } catch (err) {
             console.error(err);
-            res.status(500).json({ message: 'Internal server error' });
         }
     }
 
@@ -33,7 +34,6 @@ class ProductController {
             res.json(product);
         } catch (err) {
             console.error(err);
-            res.status(500).json({ message: 'Internal server error' });
         }
     }
 
@@ -48,7 +48,6 @@ class ProductController {
             res.json(updatedProduct);
         } catch (err) {
             console.error(err);
-            res.status(500).json({ message: 'Internal server error' });
         }
     }
 
@@ -62,7 +61,6 @@ class ProductController {
             res.json(deletedProduct);
         } catch (err) {
             console.error(err);
-            res.status(500).json({ message: 'Internal server error' });
         }
     }
 }

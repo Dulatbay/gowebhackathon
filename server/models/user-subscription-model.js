@@ -9,3 +9,4 @@ const UserSubscriptionSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model('UserSubscription', UserSubscriptionSchema);
+

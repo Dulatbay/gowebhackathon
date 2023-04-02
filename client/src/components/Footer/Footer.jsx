@@ -7,24 +7,25 @@ export const Footer = memo(() => {
             <Container>
                 <Row>
                     <Col md={4}>
-                        <h5>About Us</h5>
+                        <h5>О нас</h5>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel
-                            felis risus. Donec tincidunt magna sed nisi rhoncus, at lacinia
-                            nulla venenatis. Suspendisse potenti.
+                            Цель сайта "EcoLifestyle" - предоставить полезную информацию о том,
+                            как вести экологически осознанный образ жизни и сократить
+                            негативное воздействие на окружающую
+                            среду.
                         </p>
                     </Col>
                     <Col md={4}>
-                        <h5>Useful Links</h5>
+                        <h5>Полезные ссылки</h5>
                         <ul className="list-unstyled">
                             <li>
-                                <a href="#">Link 1</a>
+                                <a className={"default-link"} href="https://www.ecolifestyle.shop/">Партнер</a>
                             </li>
                             <li>
-                                <a href="#">Link 2</a>
+                                <a className={"default-link"} href="https://gowebhuck.kz/dashboard">GoWebHackaton</a>
                             </li>
                             <li>
-                                <a href="#">Link 3</a>
+                                <a className={"default-link"} href="https://github.com/Dulatbay/gowebhackathon">Наш лучший брэнд</a>
                             </li>
                         </ul>
                     </Col>

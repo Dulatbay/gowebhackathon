@@ -8,7 +8,6 @@ function HomeBlogs({blogs}) {
         <div className={styles.blogs}>
             <h4 className={styles.title}>Лучшие посты за сегодня</h4>
             <Blogs blogs={blogs} />
-            <BlogForm />
         </div>
     );
 }

@@ -5,10 +5,9 @@ const userController = require('../controllers/user-controller')
 const userRouter = new Router();
 
 
-
-userRouter.get("/", authMiddleware, userController.getUsers)
-
-userRouter.get("/:id", authMiddleware, userController.getUserById)
+// TODO: убрал перехватчик для дева
+userRouter.get("/", userController.getUsers)
+userRouter.get("/:id", userController.getUserById)
 userRouter.get("/email/:email", userController.getUserByEmail)
 
 module.exports = userRouter

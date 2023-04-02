@@ -3,6 +3,7 @@ const blogService = require("../services/blog-service");
 const ApiError = require("../exceptions/api-error");
 const fileService = require("../services/file-service");
 const recipeService = require("../services/recipe-service");
+const reviewService = require("../services/review-service");
 
 class BrandController {
     async getAllBrands(req, res, next) {
@@ -43,15 +44,26 @@ class BrandController {
             const id = req.params.id;
             return res.json(await brandService.confirmBrand(id))
         } catch (error) {
-            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+            next(error);
         }
     }
-    async banBrand(req, res) {
+    async banBrand(req, res, next) {
         try {
             const id = req.params.id;
             return res.json(await brandService.banBrand(id))
         } catch (error) {
-            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+            next(error);
+        }
+    }
+    async createReview(req, res, next) {
+        try {
+            const id = req.params.id;
+            const userId = req.user.id;
+            const review =  await reviewService.createReview({user: userId, ...req.body});
+            const result = await brandService.addReview(id, review._id)
+            return res.json(result)
+        } catch (error) {
+            next(error);
         }
     }
 }

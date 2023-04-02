@@ -1,6 +1,6 @@
 const recipeService = require('../services/recipe-service');
 const fileService = require('../services/file-service');
-const ApiError = require("../exceptions/api-error");
+const commentService = require("../services/comment-service");
 
 class RecipeController {
     async createRecipe(req, res, next) {
@@ -107,6 +107,67 @@ class RecipeController {
             next(error)
         }
     }
+
+
+    async addLike(req, res, next) {
+        try {
+            const recipeId = req.params.id
+            const userId = req.user.id
+            const result = await recipeService.addLike(recipeId, userId);
+            return res.json(result)
+        } catch (error) {
+            console.log(error);
+            next(error)
+        }
+    }
+
+    async removeLike(req, res, next) {
+        try {
+            const recipeId = req.params.id
+            const userId = req.user.id
+            const result = await recipeService.removeLike(recipeId, userId);
+            return res.json(result)
+        } catch (error) {
+            console.log(error);
+            next(error)
+        }
+    }
+
+    async addTag(req, res, next) {
+        try {
+            const tag = req.body.tag
+            const recipeId = req.params.id
+            const result = await recipeService.addTag(recipeId, tag);
+            return res.json(result)
+        } catch (error) {
+            console.log(error);
+            next(error)
+        }
+    }
+    async removeTag(req, res, next) {
+        try {
+            const tag = req.body.tag
+            const recipeId = req.params.id
+            const result = await recipeService.removeTag(recipeId, tag);
+            return res.json(result)
+        } catch (error) {
+            console.log(error);
+            next(error)
+        }
+    }
+    async addComment(req, res, next) {
+        try {
+            const comment = await commentService.createComment(req.user.id, req.body.text);
+            console.log(comment)
+            const result = await recipeService.addComment(req.params.id, comment._id);
+            console.log(result)
+            return res.json()
+        } catch (error) {
+            console.log(error);
+            next(error)
+        }
+    }
+
 
 }
 
