@@ -1,4 +1,4 @@
-import styles from './home-categories.module.css'
+import styles from '../home-style.module.css'
 
 export const HomeCategories = ({children}) => {
     return (

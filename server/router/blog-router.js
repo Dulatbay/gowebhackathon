@@ -2,9 +2,14 @@ const Router = require('express')
 const blogController = require('../controllers/blog-controller')
 const multipartMiddleware = require('../middlewares/multipart-middleware')
 const authMiddleware = require('../middlewares/auth-middlware')
+const {body} = require("express-validator");
 const blogRouter = new Router();
 
-blogRouter.post('/', authMiddleware, multipartMiddleware, blogController.createBlog)
+blogRouter.post('/',   authMiddleware,
+                            multipartMiddleware,
+                            body("title").exists(),
+                            body("content").exists(),
+                            blogController.createBlog)
 
 blogRouter.get("/", blogController.getAllBlogs)
 

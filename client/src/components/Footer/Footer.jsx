@@ -1,9 +1,9 @@
-import React from "react";
+import React, {memo} from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-export const Footer = () => {
+export const Footer = memo(() => {
     return (
-        <footer className="bg-dark text-light py-5" >
+        <footer className="bg-dark text-light py-5">
             <Container>
                 <Row>
                     <Col md={4}>
@@ -43,9 +43,9 @@ export const Footer = () => {
                         </ul>
                     </Col>
                 </Row>
-                <hr />
+                <hr/>
                 <p className="text-center">&copy; {new Date().getFullYear()} EcoLifeStyle Inc.</p>
             </Container>
         </footer>
     );
-};
+});

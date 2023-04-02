@@ -1,11 +1,11 @@
 import styles from './auth-page.module.css'
 import {SiOverleaf} from 'react-icons/si'
-import {useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
+import {memo, useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
 import Circle from "../../components/Circle/Circle";
 import {Context} from "../../index";
 import {Navigate} from 'react-router-dom';
 
-export const AuthPage = () => {
+export const AuthPage = memo(() => {
     const {store} = useContext(Context)
 
     const circleRefs = useRef([]);
@@ -28,7 +28,7 @@ export const AuthPage = () => {
 
         window.addEventListener("pointermove", onMove);
 
-
+        console.log(1);
         return () => window.removeEventListener("pointermove", onMove);
     }, []);
 
@@ -59,7 +59,6 @@ export const AuthPage = () => {
             console.log(res)
         }).finally(() => {
             setIsClicked(false);
-
         })
     }
 
@@ -79,7 +78,7 @@ export const AuthPage = () => {
             <Circle size={'sm'} ref={addCircleRef} delay={0}/>
             <Circle size={'md'} ref={addCircleRef} delay={0.1}/>
             <Circle size={'lg'} ref={addCircleRef} delay={0.2}/>
-            // TODO: write error messages
+            {/*TODO: write error messages*/}
             <div className={styles.bg}></div>
             <div className={styles.container}>
                 <div className={styles.logoContainer}>
@@ -127,4 +126,4 @@ export const AuthPage = () => {
             </div>
         </>
     )
-}
+})

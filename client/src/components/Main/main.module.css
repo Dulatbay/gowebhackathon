@@ -37,7 +37,7 @@
     color: white;
 }
 
-@media screen and (max-width: 1441px) {
+@media screen and (max-width: 900px) {
 
     .text div {
         font-size: 60px;

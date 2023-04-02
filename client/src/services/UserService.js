@@ -1,11 +1,10 @@
 import $api from "../http";
 
 export default class UserService{
-    static fetchUsers(){
-        return $api.get('/users')
+    static async fetchAll(){
+        return $api.get('/api/users')
     }
-    static fetchUserById(id){
-        return $api.get(`/users/${id}`)
+    static async fetchById(id){
+        return $api.get(`/api/users/${id}`)
     }
-
 }

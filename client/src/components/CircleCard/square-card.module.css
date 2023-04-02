@@ -1,0 +1,28 @@
+.card {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: transform 0.3s ease-out;
+}
+
+.card img {
+    width: 350px;
+    height: 350px;
+    display: block;
+}
+
+.container:hover .card{
+    transform: scale(1.1);
+}
+
+.title h3{
+    font-size: 20px;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

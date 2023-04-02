@@ -1,8 +1,13 @@
 const BlogModel = require("../models/blog-model");
+
 class BlogService {
     async getAllBlogs() {
-        return (await BlogModel.find({}));
+        const blogs = await BlogModel.find({})
+            .populate('authors', 'email')
+            .populate('authors', 'username')
+        return blogs;
     }
+
     async getPopularBlogs() {
         const blogs = await BlogModel.find()
             .sort({likes: -1})
@@ -26,6 +31,7 @@ class BlogService {
             .limit(10);
         return blogs;
     }
+
     async createBlog(blogData) {
         return (await BlogModel.create(blogData));
     }
@@ -59,13 +65,15 @@ class BlogService {
         const blog = await BlogModel.findByIdAndUpdate(id, {isActivated: false}, {new: true})
         return blog;
     }
-   async getBlogsByUser(userId) {
-       const blogs = await BlogModel.find({authors: userId})
-       return blogs;
+
+    async getBlogsByUser(userId) {
+        const blogs = await BlogModel.find({authors: userId})
+        return blogs;
     }
 
 
 }
+
 // todo: delete same codes
 
 module.exports = new BlogService();

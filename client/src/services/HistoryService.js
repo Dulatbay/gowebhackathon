@@ -1,23 +1,23 @@
 import $api from "../http";
 
 export default class HistoryService {
-    static fetchHistories() {
-        return $api.get('/histories');
+    static async fetchAll() {
+        return $api.get('/api/histories');
     }
 
-    static fetchHistoryById(id) {
-        return $api.get(`/histories/${id}`);
+    static async fetchById(id) {
+        return $api.get(`/api/histories/${id}`);
     }
 
-    static createHistory(payload) {
-        return $api.post('/histories', payload);
+    static async fetchCreate(payload) {
+        return $api.post('/api/histories', payload);
     }
 
-    static updateHistory(id, payload) {
-        return $api.put(`/histories/${id}`, payload);
+    static async fetchUpdate(id, payload) {
+        return $api.put(`/api/histories/${id}`, payload);
     }
 
-    static deleteHistory(id) {
-        return $api.delete(`/histories/${id}`);
+    static async fetchDelete(id) {
+        return $api.delete(`/api/histories/${id}`);
     }
 }

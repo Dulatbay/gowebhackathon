@@ -145,5 +145,34 @@ footer{
 }
 
 
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    width: 500px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 500px) {
+    .swiper-slide{
+        width: 100vw;
+        height: auto;
+    }
+}
+
 
 

@@ -6,16 +6,21 @@ const BlogModel = require("../models/blog-model");
 class BlogController {
     async createBlog(req, res, next) {
         try {
+            console.log(1)
             const images = req.files?.images;
+            console.log(images)
             const arrPathImages = await fileService.getImages(images);
+            console.log(arrPathImages)
 
             const blogData = {...req.body, images: arrPathImages};
 
+            console.log(blogData)
             const blog = await blogService.createBlog(blogData);
-
+            console.log(blog)
             return res.json(blog);
         } catch (error) {
-            next(ApiError.BadRequest(`ValidatorError - ${error.message}`))
+            console.log(error?.message);
+            next(ApiError.BadRequest(`ValidatorError - ${error?.message}`))
         }
     }
 

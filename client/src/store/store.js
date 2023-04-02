@@ -51,8 +51,8 @@ export default class Store{
     }
     async check(){
         try {
-            const res = await axios.get(`${API_URL}/auth/refresh`, {withCredentials: true})
-            console.log(res);
+            const res = await axios.get(`${API_URL}/api/auth/refresh`, {withCredentials: true})
+            console.log("User authorized");
             localStorage.setItem('token', res.data.accessToken)
             this.setAuth(true)
             this.setUser(res.data.user)
