@@ -92,11 +92,14 @@ export const AuthPage = () => {
     return (
         <>
             <ToastContainer position={"bottom-right"}/>
+
             <Circle size={'sm'} ref={addCircleRef} delay={0}/>
             <Circle size={'md'} ref={addCircleRef} delay={0.1}/>
             <Circle size={'lg'} ref={addCircleRef} delay={0.2}/>
             <div className={styles.bg}></div>
             <div className={styles.container}>
+                <button className={styles.welcomeBtn}
+                        onClick={()=>{navigate('/welcome')}}>Ознокомительная страничка </button>
                 <div className={styles.logoContainer}>
                     <div>
                         <SiOverleaf size={"3.5em"} color={"#28a92b"}/>
@@ -141,6 +144,7 @@ export const AuthPage = () => {
                         isRegistration ? "Уже есть аккаунт?" : "Создать аккаунт->"
                     }
                 </button>
+
             </div>
         </>
     )

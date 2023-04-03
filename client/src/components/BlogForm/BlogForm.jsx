@@ -6,6 +6,7 @@ import BlogService from "../../services/BlogService";
 import {Context} from "../../index";
 import {useNavigate} from "react-router-dom";
 import styles from './blog-form.module.css'
+import {toast, ToastContainer} from "react-toastify";
 
 const BlogForm = () => {
         const [content, setContent] = useState('');
@@ -38,7 +39,14 @@ const BlogForm = () => {
         const handleSubmit = async (event) => {
             event.preventDefault();
             const formData = new FormData();
-            console.log(images)
+            if(!store.user.isAcitivated){
+                toast.error("Активируйте аккаунт")
+                return;
+            }
+            if(!title.trim().length || !content.trim().length){
+                toast.error("Заполните важные поля")
+                return;
+            }
             formData.append('title', title);
             formData.append('content', content);
             formData.append('authors', store.user.id);
@@ -52,41 +60,48 @@ const BlogForm = () => {
                 } else {
                     console.log(res)
                 }
-            });
+            }).catch(e =>
+                toast.error(e.message)
+            );
         };
 
         return (
-            <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="title">
-                    <Form.Label>Загаловок</Form.Label>
-                    <Form.Control type="text" placeholder="Введите загаловок" value={title}
-                                  onChange={handleTitleChange}/>
-                </Form.Group>
-
-                <Form.Group controlId="content">
-                    <Form.Label>Контент</Form.Label>
-                    <ReactQuill value={content} onChange={handleContentChange}/>
-                </Form.Group>
-                <Form.Group controlId="images">
-                    <Form.Label>Картинки:</Form.Label>
-                    <Form.Control type="file" multiple onChange={handleImageChange}/>
-                </Form.Group>
-                <Form.Group controlId="tags">
-                    <Form.Label>Тэги:</Form.Label>
-                    <Form.Control type="text" placeholder="Введите через пробел тэги..." value={tags}
-                                  onChange={handleTagsChange}/>
-                </Form.Group>
-                {images.length > 0 && (
-                    <Form.Group>
-                        {
-                           imagesUrl.map((image, index) => <img key={index} src={image} alt={`Blog image ${index}`} width="100"/> )
-                        }
+            <>
+                <ToastContainer position={"bottom-right"}/>
+                <Form onSubmit={handleSubmit} className={styles.form}>
+                    <Form.Group controlId="title">
+                        <Form.Label>Загаловок</Form.Label>
+                        <Form.Control type="text" placeholder="Введите загаловок" value={title}
+                                      onChange={handleTitleChange}/>
                     </Form.Group>
-                )}
-                <Button variant="primary" type="submit" className={"mt-5"}>
-                    Отправить
-                </Button>
-            </Form>
+
+                    <Form.Group controlId="content">
+                        <Form.Label>Контент</Form.Label>
+                        <ReactQuill value={content} onChange={handleContentChange}/>
+                    </Form.Group>
+                    <Form.Group controlId="images">
+                        <Form.Label>Картинки:</Form.Label>
+                        <Form.Control type="file" multiple onChange={handleImageChange}/>
+                    </Form.Group>
+                    <Form.Group controlId="tags">
+                        <Form.Label>Тэги:</Form.Label>
+                        <Form.Control type="text" placeholder="Введите через пробел тэги..." value={tags}
+                                      onChange={handleTagsChange}/>
+                    </Form.Group>
+                    {images.length > 0 && (
+                        <Form.Group>
+                            {
+                                imagesUrl.map((image, index) => <img key={index} src={image} alt={`Blog image ${index}`}
+                                                                     width="100"/>)
+                            }
+                        </Form.Group>
+                    )}
+                    <Button variant="primary" type="submit" className={"mt-5 w-50 m-auto"}>
+                        Отправить
+                    </Button>
+                </Form>
+            </>
+
         );
     }
 ;

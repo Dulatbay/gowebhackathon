@@ -12,33 +12,34 @@ class BrandController {
     }
 
     async getBrandById(req, res, next) {
-        const { id } = req.params;
+        const {id} = req.params;
         const brand = await brandService.getBrandById(id);
         res.json(brand);
     }
 
     async createBrand(req, res, next) {
-        const images = req.files?.images;
 
-        const arrPathImages = await fileService.getImages(images);
+        const image = req.files?.image;
+        const pathImage = await fileService.getImages(image);
 
-        const brandData = {...req.body, images: arrPathImages};
+        const brandData = {...req.body, image: pathImage};
         const brand = await brandService.createBrand(brandData);
         res.json(brand);
     }
 
     async updateBrand(req, res, next) {
-        const { id } = req.params;
+        const {id} = req.params;
         const brandData = req.body;
         const brand = await brandService.updateBrand(id, brandData);
         res.json(brand);
     }
 
     async deleteBrand(req, res, next) {
-        const { id } = req.params;
+        const {id} = req.params;
         const brand = await brandService.deleteBrand(id);
         res.json(brand);
     }
+
     async confirmBrand(req, res, next) {
         try {
             const id = req.params.id;
@@ -47,6 +48,7 @@ class BrandController {
             next(error);
         }
     }
+
     async banBrand(req, res, next) {
         try {
             const id = req.params.id;
@@ -55,11 +57,12 @@ class BrandController {
             next(error);
         }
     }
+
     async createReview(req, res, next) {
         try {
             const id = req.params.id;
             const userId = req.user.id;
-            const review =  await reviewService.createReview({user: userId, ...req.body});
+            const review = await reviewService.createReview({user: userId, ...req.body});
             const result = await brandService.addReview(id, review._id)
             return res.json(result)
         } catch (error) {

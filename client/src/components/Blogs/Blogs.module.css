@@ -6,3 +6,10 @@
 .select{
     margin-bottom: 20px;
 }
+
+.headerTools{
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}

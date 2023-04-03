@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Pagination } from 'react-bootstrap';
+import {useState, useEffect} from 'react';
+import {Button, Pagination} from 'react-bootstrap';
 import Blog from '../Blog/Blog';
 import BlogService from "../../services/BlogService";
 import styles from "./Blogs.module.css";
+import {useNavigate} from "react-router-dom";
 
 export const Blogs = () => {
     const [blogs, setBlogs] = useState([]);
@@ -10,15 +11,15 @@ export const Blogs = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [sortBy, setSortBy] = useState('createdAt');
     const blogsPerPage = 3;
-    console.log(1)
+    const navigate = useNavigate()
     useEffect(() => {
-        const fetchBlogs =  () => {
-           BlogService.fetchWithParams(currentPage, blogsPerPage, `-${sortBy}`).then(r=>{
-               setBlogs(r.data.blogs);
-               setTotalPages(r.data.totalPages);
-           });
+        const fetchBlogs = () => {
+            BlogService.fetchWithParams(currentPage, blogsPerPage, `-${sortBy}`).then(r => {
+                setBlogs(r.data.blogs);
+                setTotalPages(r.data.totalPages);
+            });
         };
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({top: 0, behavior: 'smooth'});
         fetchBlogs();
     }, [currentPage, sortBy]);
 
@@ -27,14 +28,24 @@ export const Blogs = () => {
 
     return (
         <div className={styles.blogs}>
-            <h1>Blogs</h1>
-            <select value={sortBy} onChange={handleSortChange} className={styles.select}>
-                <option value="createdAt">Newest</option>
-                <option value="likes">Most Liked</option>
-                <option value="views">Most Viewed</option>
-            </select>
+            <div className={styles.headerTools}>
+                <div className="tools">
+                    <h1>Blogs</h1>
+                    <select value={sortBy} onChange={handleSortChange} className={styles.select}>
+                        <option value="createdAt">Newest</option>
+                        <option value="likes">Most Liked</option>
+                        <option value="views">Most Viewed</option>
+                    </select>
+                </div>
+                <div className="tools">
+                    <Button variant={"outline-primary"} onClick={() => {
+                        navigate('/blogs/create')
+                    }
+                    }>Create</Button>
+                </div>
+            </div>
             {blogs.map((blog) => (
-                <Blog key={blog._id} blog={blog} />
+                <Blog key={blog._id} blog={blog}/>
             ))}
             <Pagination className="justify-content-center">
                 {[...Array(totalPages)].map((_, index) => (

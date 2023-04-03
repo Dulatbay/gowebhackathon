@@ -7,15 +7,16 @@ import Main from "../components/Main/Main";
 import {Events} from "../components/Events/Events";
 import {Histories} from "../components/Histories/Histories";
 import {Blogs} from "../components/Blogs/Blogs";
-import {Store} from "../components/Store/Store";
+import Shop from "../components/Shop/Shop";
 import {Recipes} from "../components/Recipes/Recipes";
 import EventCard from "../components/EventCard/EventCard";
 import {About} from "../components/About/About";
 import {Context} from "../index";
-import { useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Loader} from "../components/Loader/Loader";
 import {EventsCreate} from "../components/EventsCreate/EventsCreate";
 import {UserProfile} from "../components/UserProfile/UserProfile";
+import {BlogCreate} from "../components/BlogsCreate/BlogCreate";
 
 export const AppRouter = () => {
     const navigate = useNavigate()
@@ -38,14 +39,15 @@ export const AppRouter = () => {
             <Route path="/" element={<HomePageLayout/>}>
                 <Route path={'/'} element={<Main/>}/>
                 <Route path={'/events/calendar'} element={<Events/>}/>
-                <Route path={'/events/create'} element={<EventsCreate />}/>
-                <Route path={'/events/:id'} element={<EventCard />}/>
-                <Route path={'/histories'} element={<Histories />}/>
-                <Route path={'/blogs'} element={<Blogs />}/>
-                <Route path={'/store'} element={<Store/>}/>
+                <Route path={'/events/create'} element={<EventsCreate/>}/>
+                <Route path={'/events/:id'} element={<EventCard/>}/>
+                <Route path={'/histories'} element={<Histories/>}/>
+                <Route path={'/blogs'} element={<Blogs/>}/>
+                <Route path={'/blogs/create'} element={<BlogCreate/>}/>
+                <Route path={'/store'} element={<Shop/>}/>
                 <Route path={'/recipes'} element={<Recipes/>}/>
                 <Route path={'/about'} element={<About/>}/>
-                <Route path={'/profile'} element={<UserProfile />}/>
+                <Route path={'/profile'} element={<UserProfile/>}/>
             </Route>
             <Route path="*" element={<NotFoundPage/>}/>
         </Routes>

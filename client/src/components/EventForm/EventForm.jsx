@@ -51,14 +51,19 @@ const EventForm = () => {
             event.preventDefault();
             if (error)
                 return;
+            if(!store.user.isAcitivated){
+                toast.error("Активируйте аккаунт")
+                return;
+            }
+            if(!title.trim().length || !content.trim().length){
+                toast.error("Заполните важные поля")
+                return;
+            }
 
             const formData = new FormData();
-            if (title)
-                formData.append('title', title);
-            if (content)
-                formData.append('content', content);
-            if (store.isAuth)
-                formData.append('authors', store.user.id);
+            formData.append('title', title);
+            formData.append('content', content);
+            formData.append('authors', store.user.id);
             for (let i = 0; i < images.length; i++) {
                 formData.append('images', images[i]);
             }
@@ -68,11 +73,16 @@ const EventForm = () => {
             await EventService.fetchCreate(formData).then(res => {
                 console.log(res)
                 if (res.status === 200) {
-                    console.log("OK")
+                    toast.info(res?.data?.message ? res?.data?.message : "Вы успешно создали запрос на событие")
+                    navigate('/events/calendar')
+
                 } else {
                     toast.error(res?.data?.message ? res?.data?.message : "Ошибка при валидации")
                 }
-            }).catch(e => {console.log(e.response.data.message);toast.error(e.response.data.message)});
+            }).catch(e => {
+                console.log(e.response.data.message);
+                toast.error(e.response.data.message)
+            });
         };
 
         const handleAddressChange = (event) => {

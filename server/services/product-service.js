@@ -6,8 +6,8 @@ class ProductService {
         return product;
     }
 
-    async getAllProducts() {
-        const products = await ProductModel.find({});
+    async getAllProducts(sort) {
+        const products = await ProductModel.find({}).sort(sort);
         return products;
     }
 

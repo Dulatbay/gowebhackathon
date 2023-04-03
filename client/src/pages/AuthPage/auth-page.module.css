@@ -107,7 +107,12 @@
 
 
 
-
+.welcomeBtn{
+    position: absolute;
+    top: -30px;
+    color: white;
+    opacity: 0.4;
+}
 
 .submitted{
     opacity: 0.4;

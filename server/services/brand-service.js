@@ -1,5 +1,4 @@
-const BrandModel = require('../models/brand-model');
-const BlogModel = require("../models/blog-model");
+const BrandModel = require("../models/brand-model");
 const ApiError = require("../exceptions/api-error");
 
 class BrandService {
@@ -29,21 +28,21 @@ class BrandService {
     }
 
     async confirmBrand(id) {
-        const blog = await BrandModel.findByIdAndUpdate(id, {isActivated: true}, {new: true})
-        return blog;
+        const brand = await BrandModel.findByIdAndUpdate(id, {isActivated: true}, {new: true})
+        return brand;
     }
 
     async banBrand(id) {
-        const blog = await BrandModel.findByIdAndUpdate(id, {isActivated: false}, {new: true})
-        return blog;
+        const brand = await BrandModel.findByIdAndUpdate(id, {isActivated: false}, {new: true})
+        return brand;
     }
 
-    async addReview(blogId, reviewId) {
-        const blog = await BlogModel.findById(blogId);
-        if (!blog) throw ApiError.NotFound('Blog not found');
-        blog.reviews.push(reviewId);
-        await blog.save();
-        return blog
+    async addReview(brandId, reviewId) {
+        const brand = await BrandModel.findById(brandId);
+        if (!brand) throw ApiError.NotFound('Brand not found');
+        brand.reviews.push(reviewId);
+        await brand.save();
+        return brand
     }
 }
 

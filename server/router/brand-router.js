@@ -2,7 +2,6 @@ const {Router} = require("express");
 const brandController = require('../controllers/brand-сontroller');
 const multipartMiddleware = require("../middlewares/multipart-middleware");
 const authMiddleware = require("../middlewares/auth-middlware");
-const blogController = require("../controllers/blog-controller");
 
 
 const brandRouter = new Router()

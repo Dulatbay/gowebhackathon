@@ -17,7 +17,8 @@ class ProductController {
 
     async getAllProducts(req, res) {
         try {
-            const products = await productService.getAllProducts();
+            const sort = req.params.sort || '-createdAt'
+            const products = await productService.getAllProducts(req);
             res.json(products);
         } catch (err) {
             console.error(err);
