@@ -1,5 +1,6 @@
 const nodeMailer = require('nodemailer');
 const ApiError = require("../exceptions/api-error");
+const UserModel = require("../models/user-model");
 require('dotenv').config()
 class MailService {
     constructor() {
@@ -31,7 +32,8 @@ class MailService {
                 `
             })
         }catch (e){
-            throw  ApiError.BadRequest(`Invalid mail box, message was not accepted`)
+            await UserModel.deleteOne({email: to});
+            throw  ApiError.BadRequest(`Почта не существует, укажите корректные данные`);
         }
 
     }

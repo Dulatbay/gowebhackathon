@@ -2,6 +2,7 @@ const commentService = require('../services/comment-service');
 const blogService = require('../services/blog-service');
 const fileService = require('../services/file-service');
 const ApiError = require("../exceptions/api-error");
+const BlogModel = require("../models/blog-model");
 
 class BlogController {
     async createBlog(req, res, next) {
@@ -35,48 +36,30 @@ class BlogController {
         }
     }
 
-    async getAllBlogs(req, res, next) {
+    async getBlogs(req, res, next) {
         try {
-            const blogs = await blogService.getAllBlogs();
-            return res.json(blogs);
+            const blogsPerPage = req.query.limit || 10;  // limit
+            const currentPage = req.query.page || 1;
+            const sortBy = req.query.sort || '-createdAt';
+
+            const skip = (currentPage - 1) * blogsPerPage;
+            console.log(blogsPerPage, currentPage, sortBy, skip)
+            const blogs = await blogService.getAllBlogs(skip, blogsPerPage, sortBy);
+            const totalBlogs = await BlogModel.countDocuments({});
+            const totalPages = Math.ceil(totalBlogs / blogsPerPage);
+
+            res.json({
+                blogs,
+                currentPage,
+                totalPages
+            });
         } catch (error) {
             console.log(error);
             next(error)
         }
     }
 
-    async getPopularBlogs(req, res, next) {
-        try {
-            const blogs = await blogService.getPopularBlogs();
-            return res.json(blogs);
-        } catch (error) {
-            console.log(error);
-            next(error)
 
-        }
-    }
-
-    async getNewestBlog(req, res, next) {
-        try {
-            const blogs = await blogService.getNewestBlogs();
-            return res.json(blogs);
-        } catch (error) {
-            console.log(error);
-            next(error)
-
-        }
-    }
-
-    async getMostViewedBlogs(req, res, next) {
-        try {
-            const blogs = await blogService.getMostViewedBlogs();
-            return res.json(blogs);
-        } catch (error) {
-            console.log(error);
-            next(error)
-
-        }
-    }
 
     async getUserBlogs(req, res, next) {
         try {

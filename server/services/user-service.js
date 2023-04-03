@@ -10,6 +10,9 @@ class UserService {
     async getUserByEmail(email) {
         return (await userModel.find({email}));
     }
+    async updateUsername(username) {
+        return (await userModel.updateOne({username: username}));
+    }
 }
 
 module.exports = new UserService()

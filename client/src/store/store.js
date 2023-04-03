@@ -66,7 +66,8 @@ export default class Store {
             this.setAuth(true)
             this.setUser(res.data.user)
         } catch (e) {
-            console.log(e)
+            this.setAuth(false)
+            this.setUser({})
             return e;
         }
     }

@@ -64,18 +64,18 @@ const EventCard = () => {
                     <Card.Text dangerouslySetInnerHTML={{__html: event.content}}/>
                 </Card.Body>
                 {event.images.length ? (
-                    <Card.Img variant="top" src={`${API_URL}/api/static/${event.images[0]}`} alt={event.title}/>
+                    <Card.Img variant="top" src={`${API_URL}/static/${event.images[0]}`} alt={event.title}/>
                 ) : ''
 
                 }
                 <ListGroup className="list-group-flush flex-row justify-content-around">
-                    <ListGroupItem>
+                    <ListGroupItem disabled>
                         <FaHeart/> {event.likes.length}
                     </ListGroupItem>
-                    <ListGroupItem>
+                    <ListGroupItem disabled>
                         <FaComment/> {event.comments.length}
                     </ListGroupItem>
-                    <ListGroupItem>
+                    <ListGroupItem disabled>
                         <FaBookmark/> {event.saves.length}
                     </ListGroupItem>
                 </ListGroup>

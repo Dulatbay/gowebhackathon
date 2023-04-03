@@ -18,8 +18,7 @@ class EventController {
             const event = await eventService.createEvent(eventData);
             return res.json(event);
         } catch (error) {
-            console.log(error);
-            next(error)
+            next(ApiError.BadRequest(error.message, error.errors));
         }
     }
 

@@ -99,4 +99,4 @@ const Blog = ({blog}) => {
 };
 
 
-export default observer(Blog);
+export default Blog;

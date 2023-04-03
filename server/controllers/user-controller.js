@@ -29,6 +29,16 @@ class UserController {
             next(e);
         }
     }
+    async updateUsername(req, res, next) {
+        try {
+            const {username} = req.body
+            const user = await userService.updateUsername(username);
+            res.json(user)
+        } catch (e) {
+            console.log(e);
+            next(e);
+        }
+    }
 
 }
 

@@ -125,8 +125,10 @@ export const AuthPage = () => {
                            onChange={e => setPassword(e.target.value)}
                            value={password}
                     />
-                    <button className={styles.submitBtn}
-                            onClick={submitButtonClick}>
+                    <button className={`${styles.submitBtn} ${isClicked ? styles.submitted : ''}`}
+                            onClick={submitButtonClick}
+
+                            >
                         {
                             isRegistration ? "Зарегистрироваться" : "Войти"
                         }

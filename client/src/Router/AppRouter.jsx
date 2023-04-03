@@ -12,9 +12,10 @@ import {Recipes} from "../components/Recipes/Recipes";
 import EventCard from "../components/EventCard/EventCard";
 import {About} from "../components/About/About";
 import {Context} from "../index";
-import {memo, useContext, useEffect, useState} from "react";
-import {observer} from "mobx-react-lite";
+import { useContext, useEffect, useState} from "react";
 import {Loader} from "../components/Loader/Loader";
+import {EventsCreate} from "../components/EventsCreate/EventsCreate";
+import {UserProfile} from "../components/UserProfile/UserProfile";
 
 export const AppRouter = () => {
     const navigate = useNavigate()
@@ -37,12 +38,14 @@ export const AppRouter = () => {
             <Route path="/" element={<HomePageLayout/>}>
                 <Route path={'/'} element={<Main/>}/>
                 <Route path={'/events/calendar'} element={<Events/>}/>
+                <Route path={'/events/create'} element={<EventsCreate />}/>
                 <Route path={'/events/:id'} element={<EventCard />}/>
                 <Route path={'/histories'} element={<Histories />}/>
-                <Route path={'/blogs'} element={<Blogs/>}/>
+                <Route path={'/blogs'} element={<Blogs />}/>
                 <Route path={'/store'} element={<Store/>}/>
                 <Route path={'/recipes'} element={<Recipes/>}/>
                 <Route path={'/about'} element={<About/>}/>
+                <Route path={'/profile'} element={<UserProfile />}/>
             </Route>
             <Route path="*" element={<NotFoundPage/>}/>
         </Routes>

@@ -108,6 +108,11 @@
 
 
 
+
+.submitted{
+    opacity: 0.4;
+}
+
 @media  (max-width: 500px) {
     .container{
         width: 350px;

@@ -1,19 +1,19 @@
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {SiOverleaf} from 'react-icons/si'
 import {RiAccountCircleLine} from 'react-icons/ri'
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import {Context} from "../../index";
 
 export const Header = () => {
     const {store} = useContext(Context)
-    const [isAuth, setIsAuth] = useState(false);
+    const navigate = useNavigate()
     const logoutClick = async () => {
-        await store.logout();
+        await store.logout()
+        navigate('/auth')
     }
-    useEffect(()=>{
-        store.check().then(()=> setIsAuth(store.isAuth))
-    },[])
+
+
     return (
         <Navbar bg="light" variant="light" expand="lg" sticky="top" className={"header"}>
             <Container>
@@ -23,15 +23,19 @@ export const Header = () => {
                     <Nav className="mx-auto header-tools">
                         <Nav.Link><NavLink to={'/'}>Главная</NavLink></Nav.Link>
                         <Nav.Link><NavLink to={'/events/calendar'}>События</NavLink></Nav.Link>
-                        <Nav.Link><NavLink to={'/histories'}>Истории</NavLink></Nav.Link>
+                        <Nav.Link><NavLink to={'/histories'} className={'disabled'}>Истории</NavLink></Nav.Link>
                         <Nav.Link><NavLink to={'/blogs'}>Посты</NavLink></Nav.Link>
                         <Nav.Link><NavLink to={'/store'}>Магазин</NavLink></Nav.Link>
-                        <Nav.Link><NavLink to={'/recipes'}>Рецепты</NavLink></Nav.Link>
+                        <Nav.Link><NavLink to={'/recipes'} className={'disabled'}>Рецепты</NavLink></Nav.Link>
                         <Nav.Link><NavLink to={'/about'}>О нас</NavLink></Nav.Link>
                     </Nav>
                     {
-                        isAuth ? <NavDropdown title={<RiAccountCircleLine size={25}/>} id="account-dropdown">
-                            <NavDropdown.Item>Профиль</NavDropdown.Item>
+                        store.isAuth ? <NavDropdown title={<RiAccountCircleLine size={25}/>} id="account-dropdown">
+                            <NavDropdown.Item>
+
+                                <Nav.Link><NavLink to={'/profile'}>Профиль</NavLink></Nav.Link>
+
+                            </NavDropdown.Item>
                             <NavDropdown.Item>Настройки</NavDropdown.Item>
                             <NavDropdown.Divider/>
                             <NavDropdown.Item>Уведомления: 0</NavDropdown.Item>
@@ -42,7 +46,6 @@ export const Header = () => {
                         </NavDropdown> : <Nav.Link><NavLink to={'/auth'}>Войти</NavLink></Nav.Link>
                     }
                     <Nav>
-
                     </Nav>
                 </Navbar.Collapse>
             </Container>

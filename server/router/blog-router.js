@@ -13,11 +13,8 @@ blogRouter.post('/',   authMiddleware,
 
 
 
-blogRouter.get("/", blogController.getAllBlogs)
+blogRouter.get("/", blogController.getBlogs)
 blogRouter.get("/:id", blogController.getBlogById)
-blogRouter.get("/popular", blogController.getPopularBlogs)
-blogRouter.get("/most-viewed", blogController.getMostViewedBlogs)
-blogRouter.get("/newest", blogController.getNewestBlog)
 blogRouter.get("/user/:userId", blogController.getUserBlogs)
 
 blogRouter.put("/:id", authMiddleware, multipartMiddleware, blogController.updateBlog)

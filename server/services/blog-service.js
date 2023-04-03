@@ -2,25 +2,25 @@ const BlogModel = require("../models/blog-model");
 const ApiError = require("../exceptions/api-error");
 
 class BlogService {
-    async getAllBlogs() {
+    async getAllBlogs(skip, blogsPerPage, sortBy) {
         const blogs = await BlogModel.find({})
-            .populate('authors', 'email')
-            .populate('authors', 'username')
+            .skip(skip)
+            .limit(parseInt(blogsPerPage))
+            .sort(sortBy)
+            .exec();
         return blogs;
     }
 
     async getPopularBlogs() {
         const blogs = await BlogModel.find()
             .sort({likes: -1})
-            .populate('author', '-password')
-            .limit(10);
+            .populate('authors', 'username')
         return blogs;
     }
 
     async getMostViewedBlogs() {
         const blogs = await BlogModel.find()
-            .sort({views: -1})
-            .populate('author', '-password')
+            .sort({shares: -1})
             .limit(10);
         return blogs;
     }

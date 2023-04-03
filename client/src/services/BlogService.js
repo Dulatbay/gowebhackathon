@@ -2,8 +2,13 @@ import $api from "../http";
 
 export default class BlogService {
 
-    static async fetchAll() {
-        return $api.get('/api/blogs')
+    static async fetchWithParams(currentPage, blogsPerPage, sortBy) {
+        return $api.get(`/api/blogs?page=${currentPage}&limit=${blogsPerPage}&sort=${sortBy}`)
+    }
+
+
+    static async fetchWithParam(sortBy='createdAt') {
+        return $api.get(`/api/blogs?sort=${sortBy}`)
     }
 
     static async fetchCreate(blog) {
